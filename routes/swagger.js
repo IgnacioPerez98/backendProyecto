@@ -9,7 +9,12 @@ const options = {
       description: 'API BackEnd Proyecto Final',
     },
   },
-  apis: ['./routes/api.js'], // Ruta al archivo de rutas con comentarios JSDoc
+  apis: [
+    './endpoints/actividades.js',
+    './endpoints/jugadores.js',
+    './endpoints/propuestas.js'
+  
+  ], // Ruta al archivo de rutas con comentarios JSDoc
 };
 
 const swaggerSpec = swaggerJSDoc(options);
