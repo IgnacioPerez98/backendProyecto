@@ -1,12 +1,11 @@
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./routes/swagger'); // Importa la configuración de Swagger
+
 //Endpoints
 const actividadesRoute = require('./endpoints/actividades.js');
 const jugadoresRoute = require('./endpoints/jugadores.js');
 const propuestasRoute = require('./endpoints/propuestas.js');
-
-
 
 //Almaceno instancia de express
 const app = express();
