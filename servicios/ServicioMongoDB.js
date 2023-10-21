@@ -2,23 +2,28 @@ const { MongoClient } = require('mongodb');
 const e = require("express");
 const ClienteMongo= require("mongodb").MongoClient;
 
-
 const url = 'mongodb://localhost:27017/';
 
 let database = null;
 
-
-async function connectToDatabase(dbname) {
+let cliente = null ;
+function  ObtenerCliente(){
+    return  cliente == null ? crearCliente(): cliente;
+}
+async function crearCliente() {
     if (database) return database;
 
     try {
         const client = new MongoClient(url+dbname,
-            { useNewUrlParser: true,
+            {
+                useNewUrlParser: true,
                 useUnifiedTopology: true,
+                auth: {
+                    user: 'backendproyect',
+                    password: 'dwym2023'
+                }
             });
-        await client.connect();
-        database = client.db();
-        return database;
+        return client;
     } catch (error) {
         console.error('Error connecting to MongoDB:', error);
         throw error;
@@ -28,7 +33,7 @@ async function connectToDatabase(dbname) {
 async  function crearDatabase(databaseName){
     try {
 
-        await ClienteMongo.connect(url+databaseName, function(err, db) {
+        await ObtenerCliente().connect(url+databaseName, function(err, db) {
             if (err) throw err;
             console.log("Base de Datos Creada");
             db.close();
@@ -41,7 +46,7 @@ async  function crearDatabase(databaseName){
 async function crearCollection(dbname, colectionName){
 
     try {
-        await ClienteMongo.connect(url, function (err, db) {
+        await ObtenerCliente().connect(url, function (err, db) {
             if (err) throw err;
             let dbo = db.db(dbname);
             dbo.createCollection(colectionName, function (err, res) {
@@ -56,7 +61,7 @@ async function crearCollection(dbname, colectionName){
 }
 
 async function insertarEnColeccion(dbName, colectionName, objectToInsert){
-     await  ClienteMongo.connect(url, function(err, db) {
+     await  ObtenerCliente().connect(url, function(err, db) {
         if (err) throw err;
         let dbo = db.db(dbName);
         dbo.collection(colectionName).insertOne(objectToInsert, function(err, res) {
@@ -78,7 +83,7 @@ async function insertarEnColeccion(dbName, colectionName, objectToInsert){
 * */
 async  function buscarPorQuery(dbName, collectionName, query){
     try {
-        await ClienteMongo.connect(url, function(err, db) {
+        await ObtenerCliente().connect(url, function(err, db) {
             if (err) throw err;
             let dbo = db.db(dbName);
             dbo.collection(colectionName).find(query).toArray(function(err, result) {
@@ -99,7 +104,7 @@ async  function buscarPorQuery(dbName, collectionName, query){
 
 async function deleteByQuery(dbName, collectionName, query){
     try {
-        await ClienteMongo.connect(url, function(err, db) {
+        await ObtenerCliente().connect(url, function(err, db) {
             if (err) throw err;
             let dbo = db.db(dbName);
             dbo.collection(collectionName).deleteOne(query, function(err, obj) {
@@ -115,7 +120,7 @@ async function deleteByQuery(dbName, collectionName, query){
 }
 async function deleteMultipleByQuery(dbName, collectionName, query){
     try {
-        await ClienteMongo.connect(url, function(err, db) {
+        await ObtenerCliente().connect(url, function(err, db) {
             if (err) throw err;
             let dbo = db.db(dbName);
             dbo.collection(collectionName).delete(query, function(err, obj) {
@@ -129,4 +134,11 @@ async function deleteMultipleByQuery(dbName, collectionName, query){
         console.log(error);
     }
 }
-module.exports = { connectToDatabase };
+
+
+
+
+
+module.exports = {
+    connectToDatabase, crearDatabase, crearCollection, insertarEnColeccion, deleteByQuery,deleteMultipleByQuery,buscarPorQuery
+};
