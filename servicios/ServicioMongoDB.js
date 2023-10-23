@@ -118,6 +118,12 @@ async function deleteByQuery(dbName, collectionName, query){
         console.log(error);
     }
 }
+
+let GetAllRecords = (async function (dbName){
+    const data = await db.collection(dbName).find().toArray();
+    return data;
+});
+
 async function deleteMultipleByQuery(dbName, collectionName, query){
     try {
         await ObtenerCliente().connect(url, function(err, db) {
@@ -137,8 +143,3 @@ async function deleteMultipleByQuery(dbName, collectionName, query){
 
 
 
-
-
-module.exports = {
-    connectToDatabase, crearDatabase, crearCollection, insertarEnColeccion, deleteByQuery,deleteMultipleByQuery,buscarPorQuery
-};

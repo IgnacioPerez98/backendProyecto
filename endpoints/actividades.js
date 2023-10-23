@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { connectToDatabase } = require("../servicios/ServicioMongoDB")
+const mongo = require("../servicios/ServicioMongoDB")
 /**
  * @swagger
  * /api/actividades/GetAllActividades:
@@ -11,6 +11,8 @@ const { connectToDatabase } = require("../servicios/ServicioMongoDB")
  *         description: Una lista de actividades.
  */
 router.get('/GetAllActividades', (req, res) => {
+    let actvities = mongo
+
     res.json({ products: ['Product A', 'Product B', 'Product C'] });
 });
 

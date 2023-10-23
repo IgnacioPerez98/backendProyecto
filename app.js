@@ -2,6 +2,8 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./routes/swagger'); // Importa la configuración de Swagger
 
+const  stup = require('./dockercomposeconfig/StartupData')
+
 //Endpoints
 const actividadesRoute = require('./endpoints/actividades.js');
 const jugadoresRoute = require('./endpoints/jugadores.js');
@@ -11,6 +13,7 @@ const propuestasRoute = require('./endpoints/propuestas.js');
 const app = express();
 
 app.use(express.json());
+stup.CargarDatos();
 // Middleware para servir la documentación Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
