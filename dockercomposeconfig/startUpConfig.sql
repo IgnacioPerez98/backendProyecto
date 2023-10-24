@@ -8,6 +8,12 @@ CREATE TABLE actividades(
     image blob
 );
 
+create table usuarios(
+    id int auto_increment not null primary key,
+    usuario varchar(255) not null,
+    contraseña json not null
+);
+
 create table propuestas(
     id int auto_increment not null  primary key ,
     nombre varchar(255)

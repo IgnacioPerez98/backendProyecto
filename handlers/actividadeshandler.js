@@ -28,7 +28,14 @@ let actividadesHandler = {
         let conexion1 = conexion.ObtenerConexion("proyectoback");
         conexion1.connect();
         conexion1.query(consulta);
+    },
+    deleteActividad :function(titulo){
+        const consulta = `DELETE FROM actividades WHERE titulo = '${titulo}'; `;
+        let conexion1 = conexion.ObtenerConexion("proyectoback");
+        conexion1.connect();
+        conexion1.query(consulta);
     }
+
 }
 module.exports = actividadesHandler;
 
