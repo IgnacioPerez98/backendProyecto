@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c957baa9-b38d-4569-91a8-08b6aaf23f31" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dockercomposeconfig/startUpConfig.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dockercomposeconfig/startUpConfig.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/endpoints/actividades.js" beforeDir="false" afterPath="$PROJECT_DIR$/endpoints/actividades.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/actividadeshandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/actividadeshandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    <list default="true" id="c957baa9-b38d-4569-91a8-08b6aaf23f31" name="Changes" comment="jwt">
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handlers/authhandler.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/secret.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/servicios/SHA512.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,31 +27,35 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2XCtr1xxOKEOptLl61PcvuNVFmQ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;nacho&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Administrador/Desktop/backendProyecto&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "nacho",
+    "last_opened_file_path": "C:/Users/Administrador/Desktop/backendProyecto",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "settings.sync",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;RunConfigurationTargetLRU&quot;: [
-      &quot;adc6be7f-96f3-4335-a435-3af8d736ac83&quot;
+  "keyToStringList": {
+    "RunConfigurationTargetLRU": [
+      "adc6be7f-96f3-4335-a435-3af8d736ac83"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="npm.start">
     <configuration name="startUpConfig.sql" type="DatabaseScript" editBeforeRun="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/dockercomposeconfig/startUpConfig.sql" />
@@ -84,8 +84,17 @@
       <updated>1698145092588</updated>
       <workItem from="1698145099945" duration="4376000" />
       <workItem from="1698150586171" duration="1240000" />
-      <workItem from="1698175553563" duration="1210000" />
+      <workItem from="1698175553563" duration="1575000" />
     </task>
+    <task id="LOCAL-00001" summary="jwt">
+      <option name="closed" value="true" />
+      <created>1698180178267</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698180178267</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -94,5 +103,10 @@
   <component name="UnknownFeatures">
     <option featureType="dependencySupport" implementationName="executable:docker" />
     <option featureType="dependencySupport" implementationName="executable:kubectl" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="jwt" />
+    <option name="LAST_COMMIT_MESSAGE" value="jwt" />
   </component>
 </project>
