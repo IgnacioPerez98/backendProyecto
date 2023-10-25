@@ -12,8 +12,9 @@ const options = {
   apis: [
     './endpoints/actividades.js',
     './endpoints/jugadores.js',
-    './endpoints/propuestas.js'
-  
+    './endpoints/propuestas.js',
+    './endpoints/auth.js'
+
   ], // Ruta al archivo de rutas con comentarios JSDoc
 };
 

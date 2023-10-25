@@ -4,11 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c957baa9-b38d-4569-91a8-08b6aaf23f31" name="Changes" comment="jwt">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handlers/authhandler.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/secret.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/servicios/SHA512.js" afterDir="false" />
+    <list default="true" id="c957baa9-b38d-4569-91a8-08b6aaf23f31" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dockercomposeconfig/startUpConfig.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dockercomposeconfig/startUpConfig.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/endpoints/actividades.js" beforeDir="false" afterPath="$PROJECT_DIR$/endpoints/actividades.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/endpoints/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/endpoints/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/actividadeshandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/actividadeshandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/authhandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/authhandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/swagger.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/swagger.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/secret.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,10 +43,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "nacho",
     "last_opened_file_path": "C:/Users/Administrador/Desktop/backendProyecto",
     "node.js.detected.package.eslint": "true",
@@ -84,17 +91,8 @@
       <updated>1698145092588</updated>
       <workItem from="1698145099945" duration="4376000" />
       <workItem from="1698150586171" duration="1240000" />
-      <workItem from="1698175553563" duration="1575000" />
+      <workItem from="1698175553563" duration="1210000" />
     </task>
-    <task id="LOCAL-00001" summary="jwt">
-      <option name="closed" value="true" />
-      <created>1698180178267</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1698180178267</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -103,10 +101,5 @@
   <component name="UnknownFeatures">
     <option featureType="dependencySupport" implementationName="executable:docker" />
     <option featureType="dependencySupport" implementationName="executable:kubectl" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="jwt" />
-    <option name="LAST_COMMIT_MESSAGE" value="jwt" />
   </component>
 </project>
