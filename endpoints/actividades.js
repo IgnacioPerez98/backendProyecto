@@ -6,9 +6,9 @@ const authHandler = require('../handlers/authhandler');
 /**
  * @openapi
  * info:
- *   title: Your API Title
+ *   title: Proyecto BackEnd
  *   version: 1.0.0
- *   description: Your API Description
+ *   description: Proyecto BackEnd
  *
  * paths:
  *   /api/actividades/getallactividades:
@@ -32,15 +32,21 @@ const authHandler = require('../handlers/authhandler');
  *       bearerFormat: JWT
  */
 router.get('/getallactividades', (req, res) => {
-    const head = req.headers['authorization'];
-    if(!head){
-        return  res.status(401).json({message : "Usuario no autenticado"});
-    }
-    let token = head.split(" ").at(1);
-    if(authHandler.validacionInternadeUsuario(token) == null){
-        return  res.status(401).json({message : "Usuario no autenticado"});
-    }
     try {
+        const head = req.headers['authorization'];
+        if(!head){
+            return  res.status(401).json({message : "Usuario no autenticado"});
+        }
+        let token = head.split(" ").at(1);
+        authHandler.validacionInternadeUsuario(token).then(
+            (data) =>{
+                if(data === null){
+                    return  res.status(401).json({message : "Usuario no autenticado"});
+                }
+            }
+        ).catch((e)=>{
+            console.log(e);
+        })
         let instance = acthandler.getAllActivities();
         instance.then((data) => {
             res.status(200).json(data);
@@ -57,10 +63,17 @@ router.get('/getallactividades', (req, res) => {
 
 
 /**
- * @swagger
+ * @openapi
+ * info:
+ *   title: Proyecto BackEnd
+ *   version: 1.0.0
+ *   description: Proyecto BackEnd
+ *
  * /api/actividades/crearactividad:
  *   post:
  *     summary: crea una nueva actividad
+ *     security:
+ *         - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -77,8 +90,29 @@ router.get('/getallactividades', (req, res) => {
  *         description: Activity saved successfully
  *       500:
  *         description: Error saving the activity
+ *
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 router.post('/crearactividad', (req, res) => {
+    const head = req.headers['authorization'];
+    if(!head){
+        return  res.status(401).json({message : "Usuario no autenticado"});
+    }
+    let token = head.split(" ").at(1);
+    authHandler.validacionInternadeUsuario(token).then(
+        (data) =>{
+            if(data === null){
+                return  res.status(401).json({message : "Usuario no autenticado"});
+            }
+        }
+    ).catch((e)=>{
+        console.log(e);
+    })
     const { titulo, descripcion } = req.body;
 
     let resultado = acthandler.insertActividad(titulo,descripcion);
@@ -90,10 +124,17 @@ router.post('/crearactividad', (req, res) => {
 });
 
 /**
- * @swagger
+ * @openapi
+ * info:
+ *   title: Proyecto BackEnd
+ *   version: 1.0.0
+ *   description: Proyecto BackEnd
+ *
  * /api/actividades/elimininaractividad:
  *   delete:
  *     summary: Elimina una actividad
+ *     security:
+ *         - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -108,6 +149,13 @@ router.post('/crearactividad', (req, res) => {
  *         description: Actividad eliminada correctamente
  *       404:
  *         description: Actividad no encontrada
+ *
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 router.delete('/elimininaractividad', (req, res) => {
     const { titulo }  = req.body;

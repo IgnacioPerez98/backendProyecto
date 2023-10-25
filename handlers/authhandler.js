@@ -16,14 +16,19 @@ let authhandler = {
         });
     },
     validacionInternadeUsuario:function(token){
-        try{
+        return  new Promise((rejected,resolve)=>{
+            let response = "";
             this.validarUsuarioconToken(token).then( (data)=>{
-                    return data.username;
+                    if(data === null || data === undefined || data === ""){
+                        rejected(null);
+                    }else {
+                        resolve(data.username);
+                    }
+
                 }
             )
-        }catch (error){
-            return null;
-        }
+            }
+        )
     },
     validarUsuario : function(usuario){
         return new Promise( (resolve, reject) =>{

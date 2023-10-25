@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c957baa9-b38d-4569-91a8-08b6aaf23f31" name="Changes" comment="token generation and validation ok">
+    <list default="true" id="c957baa9-b38d-4569-91a8-08b6aaf23f31" name="Changes" comment="token generation and validation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/endpoints/actividades.js" beforeDir="false" afterPath="$PROJECT_DIR$/endpoints/actividades.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/authhandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/authhandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/swagger.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/swagger.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,8 +85,17 @@
       <workItem from="1698145099945" duration="4376000" />
       <workItem from="1698150586171" duration="1240000" />
       <workItem from="1698175553563" duration="1210000" />
-      <workItem from="1698269894365" duration="1998000" />
+      <workItem from="1698269894365" duration="4516000" />
     </task>
+    <task id="LOCAL-00001" summary="token generation and validation">
+      <option name="closed" value="true" />
+      <created>1698271952046</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698271952046</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,5 +104,9 @@
   <component name="UnknownFeatures">
     <option featureType="dependencySupport" implementationName="executable:docker" />
     <option featureType="dependencySupport" implementationName="executable:kubectl" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="token generation and validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="token generation and validation" />
   </component>
 </project>
