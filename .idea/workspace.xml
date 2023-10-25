@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c957baa9-b38d-4569-91a8-08b6aaf23f31" name="Changes" comment="">
+    <list default="true" id="c957baa9-b38d-4569-91a8-08b6aaf23f31" name="Changes" comment="token generation and validation ok">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dockercomposeconfig/startUpConfig.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dockercomposeconfig/startUpConfig.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/endpoints/actividades.js" beforeDir="false" afterPath="$PROJECT_DIR$/endpoints/actividades.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/authhandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/authhandler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/swagger.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/swagger.js" afterDir="false" />
@@ -35,28 +34,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;nacho&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Administrador/Desktop/backendProyecto&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "nacho",
+    "last_opened_file_path": "C:/Users/Administrador/Desktop/backendProyecto",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "settings.sync",
+    "show.migrate.to.gradle.popup": "false",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;RunConfigurationTargetLRU&quot;: [
-      &quot;adc6be7f-96f3-4335-a435-3af8d736ac83&quot;
+  "keyToStringList": {
+    "RunConfigurationTargetLRU": [
+      "adc6be7f-96f3-4335-a435-3af8d736ac83"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="npm.start">
     <configuration name="startUpConfig.sql" type="DatabaseScript" editBeforeRun="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/dockercomposeconfig/startUpConfig.sql" />
@@ -86,6 +86,7 @@
       <workItem from="1698145099945" duration="4376000" />
       <workItem from="1698150586171" duration="1240000" />
       <workItem from="1698175553563" duration="1210000" />
+      <workItem from="1698269894365" duration="1998000" />
     </task>
     <servers />
   </component>

@@ -8,21 +8,22 @@ const options = {
       version: '1.0.0',
       description: 'API BackEnd Proyecto Final',
     },
-    securityDefinitions: {
-      BearerAuth: {
-        type: 'apiKey',
-        in: 'header',
-        name: 'Authorization',
-        description: 'Enter your Bearer token in the format "Bearer {token}"',
-      }
+    components: {
+      securitySchemes: {
+        BearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'Enter your Bearer token in the format "Bearer {token}"',
+        },
+      },
     },
   },
   apis: [
     './endpoints/actividades.js',
     './endpoints/jugadores.js',
     './endpoints/propuestas.js',
-    './endpoints/auth.js'
-
+    './endpoints/auth.js',
   ],
 };
 

@@ -18,9 +18,7 @@ let authhandler = {
     validacionInternadeUsuario:function(token){
         try{
             this.validarUsuarioconToken(token).then( (data)=>{
-                    console.log(data.usuario);
-                    let username = data.usuario;
-                    return username ;
+                    return data.username;
                 }
             )
         }catch (error){

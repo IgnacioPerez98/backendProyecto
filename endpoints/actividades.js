@@ -2,31 +2,45 @@ const express = require('express');
 const router = express.Router();
 const acthandler= require('../handlers/actividadeshandler')
 const authHandler = require('../handlers/authhandler');
-/**
- * @swagger
- * /protected:
- * /api/actividades/getallactividades:
- *   get:
- *     summary: Obtiene todas las Actividades
- *     security:
- *        - BearerAuth: []
- *     responses:
-       '200':
-          description: Una lista de actividades.
-       '401':
-          description: Usuario no autenticado.
-       '500':
-         description: Error en respuesta.
 
+/**
+ * @openapi
+ * info:
+ *   title: Your API Title
+ *   version: 1.0.0
+ *   description: Your API Description
+ *
+ * paths:
+ *   /api/actividades/getallactividades:
+ *     get:
+ *       summary: Obtiene todas las Actividades
+ *       security:
+ *         - BearerAuth: []
+ *       responses:
+ *         '200':
+ *           description: Una lista de actividades.
+ *         '401':
+ *           description: Usuario no autenticado.
+ *         '500':
+ *           description: Error en respuesta
+ *
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 router.get('/getallactividades', (req, res) => {
-    const tokencito = req.headers['authorization'].split(' ')[1];
-    console.log(authHandler.validacionInternadeUsuario(tokencito))  ;
-    if(authHandler.validacionInternadeUsuario(tokencito) == null){
+    const head = req.headers['authorization'];
+    if(!head){
+        return  res.status(401).json({message : "Usuario no autenticado"});
+    }
+    let token = head.split(" ").at(1);
+    if(authHandler.validacionInternadeUsuario(token) == null){
         return  res.status(401).json({message : "Usuario no autenticado"});
     }
     try {
-
         let instance = acthandler.getAllActivities();
         instance.then((data) => {
             res.status(200).json(data);
@@ -47,7 +61,6 @@ router.get('/getallactividades', (req, res) => {
  * /api/actividades/crearactividad:
  *   post:
  *     summary: crea una nueva actividad
- *     description: Crea un actividad con titulo y descripción;
  *     requestBody:
  *       required: true
  *       content:
@@ -81,7 +94,6 @@ router.post('/crearactividad', (req, res) => {
  * /api/actividades/elimininaractividad:
  *   delete:
  *     summary: Elimina una actividad
- *     description: Elimina una actividad a partir del titulo;
  *     requestBody:
  *       required: true
  *       content:
