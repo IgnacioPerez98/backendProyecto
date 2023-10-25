@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c957baa9-b38d-4569-91a8-08b6aaf23f31" name="Changes" comment="jwt">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handlers/authhandler.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/secret.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/servicios/SHA512.js" afterDir="false" />
-    </list>
+    <list default="true" id="c957baa9-b38d-4569-91a8-08b6aaf23f31" name="Changes" comment="jwt" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,28 +29,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "nacho",
-    "last_opened_file_path": "C:/Users/Administrador/Desktop/backendProyecto",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "settings.sync",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;nacho&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Administrador/Desktop/backendProyecto&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "RunConfigurationTargetLRU": [
-      "adc6be7f-96f3-4335-a435-3af8d736ac83"
+  &quot;keyToStringList&quot;: {
+    &quot;RunConfigurationTargetLRU&quot;: [
+      &quot;adc6be7f-96f3-4335-a435-3af8d736ac83&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="npm.start">
     <configuration name="startUpConfig.sql" type="DatabaseScript" editBeforeRun="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/dockercomposeconfig/startUpConfig.sql" />
@@ -85,6 +80,7 @@
       <workItem from="1698145099945" duration="4376000" />
       <workItem from="1698150586171" duration="1240000" />
       <workItem from="1698175553563" duration="1575000" />
+      <workItem from="1698180854639" duration="228000" />
     </task>
     <task id="LOCAL-00001" summary="jwt">
       <option name="closed" value="true" />
@@ -94,7 +90,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698180178267</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="jwt">
+      <option name="closed" value="true" />
+      <created>1698180897776</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1698180897776</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
