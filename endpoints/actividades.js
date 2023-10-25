@@ -14,13 +14,19 @@ const acthandler= require('../handlers/actividadeshandler')
  *
  */
 router.get('/getallactividades', (req, res) => {
-    let instance = acthandler.getAllActivities();
-    instance.then((data) => {
-        res.status(200).json(data);
-    })
-        .catch((error) => {
-            res.status(500).json({mensaje :`Error al obtener datos`});
-        });
+    try {
+        let instance = acthandler.getAllActivities();
+        instance.then((data) => {
+            res.status(200).json(data);
+        })
+            .catch((error) => {
+                res.status(500).json({mensaje :`Error al obtener datos`});
+            });
+
+    }catch (error){
+
+        res.status(500).json({mensaje :`Error al obtener datos`});
+    }
 });
 
 
@@ -50,9 +56,12 @@ router.get('/getallactividades', (req, res) => {
 router.post('/crearactividad', (req, res) => {
     const { titulo, descripcion } = req.body;
 
-    acthandler.insertActividad(titulo,descripcion);
-
-    res.json({ mensaje:`Se agregaron los valores : Titulo => ${titulo}, Descripcion: => ${descripcion}`});
+    let resultado = acthandler.insertActividad(titulo,descripcion);
+    if(resultado){
+        res.status(200).json({ mensaje:`Se agregaron los valores : Titulo => ${titulo}, Descripcion: => ${descripcion}`});
+    }else {
+        res.status(500).json({mensaje: `Error del servidor`});
+    }
 });
 
 /**
@@ -79,9 +88,15 @@ router.post('/crearactividad', (req, res) => {
 router.delete('/elimininaractividad', (req, res) => {
     const { titulo }  = req.body;
     try {
-        acthandler.deleteActividad(titulo);
-        res.status(200).json(
-            {mensaje: `La actividad con titulo ${titulo}, no se pudo encontrarse elimino exitosamente`});
+        let result = acthandler.deleteActividad(titulo);
+        if(result){
+            res.status(200).json(
+                {mensaje: `La actividad con titulo ${titulo}, no se elimino exitosamente`});
+        }else {
+            res.status(404).json(
+                {mensaje: `La actividad con titulo ${titulo}, no se pudo encontrar.` }
+            );
+        }
     }catch (error){
         res.status(404).json(
             {mensaje: `La actividad con titulo ${titulo}, no se pudo encontrar.` }

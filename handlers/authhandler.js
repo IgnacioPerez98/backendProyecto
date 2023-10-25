@@ -1,14 +1,43 @@
 const conexion = require('../servicios/ServicioMySQL');
 const hashing = require('../servicios/SHA512')
+const {json} = require("express");
+const jwt = require('jsonwebtoken');
 
 let authhandler = {
     validarUsuarioconToken: function(token){
+        return new Promise((resolve,reject)=>{
+            jwt.verify(token, process.env.TOKEN_SECRET.toString(), (err, user) => {
+                if (err) {
+                    console.log(err);
+                    return  reject(err); // Pass an error or null to the callback
+                } else {
+                    console.log(user);
+                    return resolve(user); // Pass the user to the callback
+                }
+            });
+        });
+    },
+    validarUsuario : function(usuario){
+        return new Promise( (resolve, reject) =>{
+            let consulta = `SELECT JSON_OBJECT('usuario',usuario,'contrasena',contrasena,'rol',rol) AS userJSON from usuarios where usuario = '${usuario}' `;
+            let conexion1 = conexion.ObtenerConexion("proyectoback");
+            conexion1.connect();
+            conexion1.query(consulta, (bad, ok) =>{
+                if(bad){
+                    reject(bad);
+                }else{
+                    try {
+                        const objectArray = JSON.parse(ok[0].userJSON);
+                        resolve(objectArray);
+                    } catch (error) {
+                        reject(error);
+                    }
+                }
+            })
+        });
 
     },
-    validarUsuario : function(usuario, contraseña){
-
-    },
-    ingresarUsuario : function(usuario, contrasena){
+    ingresarUsuario : function(usuario, contrasena, tokenadmin){
         try{
             let criptedpass = hashing.cifrar(contrasena);
             let pass = {
@@ -25,7 +54,7 @@ let authhandler = {
             return false;
         }
     },
-    modficarUsuario : function(){
+    modficarUsuario : function(usuario, contrasena, tokenadmin){
         try{
             let criptedpass = hashing.cifrar(contrasena);
             let pass = {

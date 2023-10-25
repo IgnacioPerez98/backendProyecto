@@ -23,17 +23,29 @@ let actividadesHandler = {
         });
     },
     insertActividad : function (titulo, descripcion , image = null) {
-        const consulta = image != null ?`INSERT INTO actividades(titulo,descripcion, image) VALUES('${titulo}','${descripcion}', '${image}')`:
-            `INSERT INTO actividades(titulo,descripcion) VALUES('${titulo}','${descripcion}')`;
-        let conexion1 = conexion.ObtenerConexion("proyectoback");
-        conexion1.connect();
-        conexion1.query(consulta);
+
+        try {
+            const consulta = image != null ?`INSERT INTO actividades(titulo,descripcion, image) VALUES('${titulo}','${descripcion}', '${image}')`:
+                `INSERT INTO actividades(titulo,descripcion) VALUES('${titulo}','${descripcion}')`;
+            let conexion1 = conexion.ObtenerConexion("proyectoback");
+            conexion1.connect();
+            conexion1.query(consulta);
+            return true
+        }catch (error){
+            return false;
+        }
     },
     deleteActividad :function(titulo){
-        const consulta = `DELETE FROM actividades WHERE titulo = '${titulo}'; `;
-        let conexion1 = conexion.ObtenerConexion("proyectoback");
-        conexion1.connect();
-        conexion1.query(consulta);
+        try {
+            const consulta = `DELETE FROM actividades WHERE titulo = '${titulo}'; `;
+            let conexion1 = conexion.ObtenerConexion("proyectoback");
+            conexion1.connect();
+            conexion1.query(consulta);
+            return true;
+
+        }catch (error){
+            return false;
+        }
     }
 
 }
