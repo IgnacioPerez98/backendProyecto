@@ -8,6 +8,14 @@ const options = {
       version: '1.0.0',
       description: 'API BackEnd Proyecto Final',
     },
+    securityDefinitions: {
+      BearerAuth: {
+        type: 'apiKey',
+        in: 'header',
+        name: 'Authorization',
+        description: 'Enter your Bearer token in the format "Bearer {token}"',
+      }
+    },
   },
   apis: [
     './endpoints/actividades.js',
@@ -15,7 +23,7 @@ const options = {
     './endpoints/propuestas.js',
     './endpoints/auth.js'
 
-  ], // Ruta al archivo de rutas con comentarios JSDoc
+  ],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

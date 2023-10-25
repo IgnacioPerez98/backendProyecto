@@ -8,14 +8,24 @@ let authhandler = {
         return new Promise((resolve,reject)=>{
             jwt.verify(token, process.env.TOKEN_SECRET.toString(), (err, user) => {
                 if (err) {
-                    console.log(err);
-                    return  reject(err); // Pass an error or null to the callback
+                    return  reject(err);
                 } else {
-                    console.log(user);
-                    return resolve(user); // Pass the user to the callback
+                    return resolve(user);
                 }
             });
         });
+    },
+    validacionInternadeUsuario:function(token){
+        try{
+            this.validarUsuarioconToken(token).then( (data)=>{
+                    console.log(data.usuario);
+                    let username = data.usuario;
+                    return username ;
+                }
+            )
+        }catch (error){
+            return null;
+        }
     },
     validarUsuario : function(usuario){
         return new Promise( (resolve, reject) =>{

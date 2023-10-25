@@ -1,20 +1,32 @@
 const express = require('express');
 const router = express.Router();
 const acthandler= require('../handlers/actividadeshandler')
+const authHandler = require('../handlers/authhandler');
 /**
  * @swagger
+ * /protected:
  * /api/actividades/getallactividades:
  *   get:
  *     summary: Obtiene todas las Actividades
+ *     security:
+ *        - BearerAuth: []
  *     responses:
- *       '200':
- *         description: Una lista de actividades.
- *       '500':
- *         description: Error en respuesta.
- *
+       '200':
+          description: Una lista de actividades.
+       '401':
+          description: Usuario no autenticado.
+       '500':
+         description: Error en respuesta.
+
  */
 router.get('/getallactividades', (req, res) => {
+    const tokencito = req.headers['authorization'].split(' ')[1];
+    console.log(authHandler.validacionInternadeUsuario(tokencito))  ;
+    if(authHandler.validacionInternadeUsuario(tokencito) == null){
+        return  res.status(401).json({message : "Usuario no autenticado"});
+    }
     try {
+
         let instance = acthandler.getAllActivities();
         instance.then((data) => {
             res.status(200).json(data);
