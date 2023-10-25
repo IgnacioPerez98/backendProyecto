@@ -1,12 +1,12 @@
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./routes/swagger'); // Importa la configuración de Swagger
+
 //Endpoints
 const actividadesRoute = require('./endpoints/actividades.js');
 const jugadoresRoute = require('./endpoints/jugadores.js');
 const propuestasRoute = require('./endpoints/propuestas.js');
-
-
+const authRoute = require('./endpoints/auth.js')
 
 //Almaceno instancia de express
 const app = express();
@@ -19,6 +19,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/actividades', actividadesRoute);
 app.use('/api/jugadores', jugadoresRoute );
 app.use('/api/propuestas',propuestasRoute );
+app.use('/api/auth',authRoute );
 
 
 const PORT = process.env.PORT || 3000;

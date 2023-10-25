@@ -8,15 +8,27 @@ const options = {
       version: '1.0.0',
       description: 'API BackEnd Proyecto Final',
     },
+    components: {
+      securitySchemes: {
+        BearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'Enter your Bearer token in the format "Bearer {token}"',
+        },
+      },
+    },
   },
   apis: [
     './endpoints/actividades.js',
     './endpoints/jugadores.js',
-    './endpoints/propuestas.js'
-  
-  ], // Ruta al archivo de rutas con comentarios JSDoc
+    './endpoints/propuestas.js',
+    './endpoints/auth.js',
+  ],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
 
 module.exports = swaggerSpec;
+
+
