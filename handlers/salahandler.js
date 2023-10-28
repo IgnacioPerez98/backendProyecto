@@ -1,7 +1,6 @@
 const conexion = require('../servicios/ServicioMySQL');
 const hashing = require('../servicios/SHA512');
 const ActividadesHandler = require('../handlers/actividadeshandler');
-const {connect} = require("mongodb/src/cmap/connect");
 
 
 let salaHandler ={
@@ -28,20 +27,19 @@ let salaHandler ={
             }
         })
     },
-    estadoSala: function (estado,hashSala){
+    estadoSala: function (estado,nombreSala){
         return new Promise((resolve,reject)=>{
            try {
                let con = conexion.ObtenerConexion("proyectoback");
-               let consulta = `UPDATE juego SET isOpen = ${estado} WHERE juego.nombre = '${hashSala}'`;
+               let consulta = `UPDATE juego SET isOpen = ${estado} WHERE juego.nombre = '${nombreSala}'`;
                con.connect();
                con.query(consulta);
-               resolve({estado: `Se cambio el estado de la actividad a ${estado}`});
+               resolve({message: `Se cambio el estado de la actividad a ${estado}`});
 
            } catch (e){
                reject(e)
            }
         });
-        
     },
     eliminarSala : function (hashSala){
         return new Promise((resolve,reject)=>{

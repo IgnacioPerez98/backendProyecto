@@ -21,8 +21,8 @@ const options = {
   },
   apis: [
     './endpoints/actividades.js',
-    './endpoints/jugadores.js',
-    './endpoints/propuestas.js',
+    './endpoints/sala.js',
+    './endpoints/votacion.js',
     './endpoints/auth.js',
   ],
 };

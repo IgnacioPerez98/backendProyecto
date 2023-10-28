@@ -19,10 +19,15 @@ create table propuestas(
     nombre varchar(255)
 );
 create table juego(
-    id int auto_increment not null  primary key ,
-    nombre varchar(255) PRIMARY KEY,
+    nombre varchar(255) NOT NULL PRIMARY KEY,
     actividades JSON,
     isOpen boolean
+);
+create table votacion(
+    id int auto_increment not null  primary key ,
+    actividad varchar(255) not null ,
+    voto int not null,
+    nombresala varchar(255)
 );
 
 /*Cargar datos hash => password*/

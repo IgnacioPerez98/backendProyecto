@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const serviciohash = require('../servicios/SHA512')
 const jwt = require('jsonwebtoken');
-const ServicioAuth = require('../handlers/authhandler');
 const dotenv = require('dotenv');
+const ServicioAuth = require('../handlers/authhandler');
 
 // get config vars
 dotenv.config();
