@@ -20,8 +20,9 @@ create table propuestas(
 );
 create table juego(
     id int auto_increment not null  primary key ,
-    codigo varchar(255),
-    link varchar(255)
+    nombre varchar(255),
+    actividades JSON,
+    isOpen boolean
 );
 
 /*Cargar datos hash => password*/

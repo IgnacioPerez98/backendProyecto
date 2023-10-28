@@ -4,5 +4,4 @@ let ServicioEncriptacion = {
         return crypto.createHash('sha512').update(text).digest('hex');
     }
 }
-
 module.exports = ServicioEncriptacion;
