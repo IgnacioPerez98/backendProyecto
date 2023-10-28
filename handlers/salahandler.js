@@ -15,7 +15,7 @@ let salaHandler ={
                         actividades: data,
                         isOpen : false
                     }
-                    let consulta = `INSERT INTO juego(nombre, actividades,isOpen) VALUES ('${sala.nombre}', '${JSON.stringify(sala.actividades)}', ${data.isOpen} )`;
+                    let consulta = `INSERT INTO juego(nombre, actividades,isOpen) VALUES ('${sala.nombre}', '${JSON.stringify(sala.actividades)}', ${sala.isOpen} )`;
                     con.connect();
                     con.query(consulta);
                     resolve(sala);

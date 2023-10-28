@@ -20,17 +20,17 @@ const votacionservice = require("../handlers/votacionhandler");
  *         - BearerAuth: []
  *       requestBody:
  *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      type: object
- *                      properties:
- *                          nombresala:
- *                              type: string
- *                          nombreactividad:
- *                              type:string
- *                          voto:
- *                              type: number
+ *       content:
+ *          application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      nombresala:
+ *                          type: string
+ *                      nombreactividad:
+ *                          type: string
+ *                      voto:
+ *                          type: string
  *       responses:
  *         '200':
  *           description: Un message con el estado.
@@ -64,7 +64,7 @@ router.post("/votar",(req,res)=>{
             console.log(e);
         })
         votacionservice.votarActividad(nombresala,nombreactividad,voto).then((data)=>{
-            res.status(200).json(data);
+            res.status(200).json(JSON.stringify(data));
 
         }).catch((error)=>{
             res.status(500).json({mensaje: `Error del servidor`, detalles: error.toString()});

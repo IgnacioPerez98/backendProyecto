@@ -59,7 +59,7 @@ router.post('/gettoken', (req, res) => {
         })
     }catch (e){
 
-        res.status(500).json({ message: 'Error de servidor' });
+        res.status(500).json({ message: 'Error de servidor', detalles : e.toString() });
     }
 });
 
@@ -87,10 +87,8 @@ router.post('/gettoken', (req, res) => {
  *         description: Error del servidor
  */
 router.post('/validartoken', (req, res) => {
-
-    const {token} = req.body;
-
     try {
+        const {token} = req.body;
         ServicioAuth.validarUsuarioconToken(token).then(
             (data) => {
                 res.status(200).json(data);
@@ -99,7 +97,7 @@ router.post('/validartoken', (req, res) => {
            res.status(403).json(err);
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error del servidor' });
+        res.status(500).json({ message: 'Error del servidor', detalles : e.toString() });
     }
 });
 

@@ -69,10 +69,10 @@ router.post("/crearsala", (req,res)=>{
                res.status(200).json(data);
            }
        ).catch((error)=>{
-           return res.status(500).json({mensaje : "Error del servidor."});
+           return res.status(500).json({mensaje : "Error del servidor.",detalles:error.toString()});
        });
     }catch (e){
-        return res.status(500).json({mensaje : "Error del servidor."});
+        return res.status(500).json({mensaje : "Error del servidor.", detalles : e.toString()});
     }
 })
 /**
@@ -141,7 +141,7 @@ router.post("/cambiarestadosala", (req, res)=>{
        })
 
    } catch (e){
-       res.status(500).json({message:"Error del servidor"});
+       res.status(500).json({message:"Error del servidor", detalles : e.toString()});
    }
 });
 
@@ -208,7 +208,7 @@ router.post("/eliminarsala",(req,res)=>{
         })
 
     }catch (e){
-        res.status(500).json({message:"Error del servidor"});
+        res.status(500).json({message:"Error del servidor", detalles : e.toString()});
     }
 })
 

@@ -99,27 +99,32 @@ router.get('/getallactividades', (req, res) => {
  *       bearerFormat: JWT
  */
 router.post('/crearactividad', (req, res) => {
-    const head = req.headers['authorization'];
-    if(!head){
-        return  res.status(401).json({message : "Usuario no autenticado"});
-    }
-    let token = head.split(" ").at(1);
-    authHandler.validacionInternadeUsuario(token).then(
-        (data) =>{
-            if(data === null){
-                return  res.status(401).json({message : "Usuario no autenticado"});
-            }
+    try {
+        const head = req.headers['authorization'];
+        if(!head){
+            return  res.status(401).json({message : "Usuario no autenticado"});
         }
-    ).catch((e)=>{
-        console.log(e);
-    })
-    const { titulo, descripcion } = req.body;
+        let token = head.split(" ").at(1);
+        authHandler.validacionInternadeUsuario(token).then(
+            (data) =>{
+                if(data === null){
+                    return  res.status(401).json({message : "Usuario no autenticado"});
+                }
+            }
+        ).catch((e)=>{
+            console.log(e);
+        })
+        const { titulo, descripcion } = req.body;
 
-    let resultado = acthandler.insertActividad(titulo,descripcion);
-    if(resultado){
-        res.status(200).json({ mensaje:`Se agregaron los valores : Titulo => ${titulo}, Descripcion: => ${descripcion}`});
-    }else {
-        res.status(500).json({mensaje: `Error del servidor`});
+        let resultado = acthandler.insertActividad(titulo,descripcion);
+        if(resultado){
+            res.status(200).json({ mensaje:`Se agregaron los valores : Titulo => ${titulo}, Descripcion: => ${descripcion}`});
+        }else {
+            res.status(500).json({mensaje: `Error del servidor`});
+        }
+
+    }catch (e){
+        res.status(500).json({message: "Error del servidor", detalles : e.toString()})
     }
 });
 
@@ -158,8 +163,8 @@ router.post('/crearactividad', (req, res) => {
  *       bearerFormat: JWT
  */
 router.delete('/elimininaractividad', (req, res) => {
-    const { titulo }  = req.body;
     try {
+        const { titulo }  = req.body;
         let result = acthandler.deleteActividad(titulo);
         if(result){
             res.status(200).json(
