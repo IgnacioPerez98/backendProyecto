@@ -5,17 +5,18 @@ const {connect} = require("mongodb/src/cmap/connect");
 
 
 let salaHandler ={
-    crearSalaTodasLasActividades : function (){
+    crearSalaTodasLasActividades : function (nombreSala){
         return new Promise((resolve, reject)=>{
             try {
                 let con = conexion.ObtenerConexion("proyectoback");
                 ActividadesHandler.getAllActivities().then( (data) => {
                     let sala ={
-                        nombre: hashing.cifrar(Date.now().toString()),//crea un nombre a partir de la fecha actual, por lo que es unico
+                        nombre: nombreSala,
+                        link :hashing.cifrar(nombreSala),
                         actividades: data,
                         isOpen : false
                     }
-                    let consulta = `INSERT INTO juego(nombre, actividades,isOpen) values ('${sala.nombre}', '${JSON.stringify(sala.actividades)}', ${data.isOpen} )`;
+                    let consulta = `INSERT INTO juego(nombre, actividades,isOpen) VALUES ('${sala.nombre}', '${JSON.stringify(sala.actividades)}', ${data.isOpen} )`;
                     con.connect();
                     con.query(consulta);
                     resolve(sala);
@@ -31,9 +32,10 @@ let salaHandler ={
         return new Promise((resolve,reject)=>{
            try {
                let con = conexion.ObtenerConexion("proyectoback");
-               let consulta = `UPDATE juego SET isOpen = ${estado} WHERE juego.nombre = ${hashSala}`;
+               let consulta = `UPDATE juego SET isOpen = ${estado} WHERE juego.nombre = '${hashSala}'`;
                con.connect();
                con.query(consulta);
+               resolve({estado: `Se cambio el estado de la actividad a ${estado}`});
 
            } catch (e){
                reject(e)
@@ -41,9 +43,17 @@ let salaHandler ={
         });
         
     },
-    cerrarSala : function (hashSala){
+    eliminarSala : function (hashSala){
         return new Promise((resolve,reject)=>{
-
+            try {
+                let con = conexion.ObtenerConexion("proyectoback");
+                let consulta = `DELETE FROM juego WHERE juego.nombre = '${hashSala}'`;
+                con.connect();
+                con.query(consulta);
+                resolve({estado: `Eliminación correcta`});
+            }catch (e) {
+                reject(e);
+            }
         })
     }
 }

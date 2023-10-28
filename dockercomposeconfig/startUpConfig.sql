@@ -20,7 +20,7 @@ create table propuestas(
 );
 create table juego(
     id int auto_increment not null  primary key ,
-    nombre varchar(255),
+    nombre varchar(255) PRIMARY KEY,
     actividades JSON,
     isOpen boolean
 );
