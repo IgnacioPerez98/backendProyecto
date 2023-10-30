@@ -168,7 +168,7 @@ router.delete('/elimininaractividad', (req, res) => {
         let result = acthandler.deleteActividad(titulo);
         if(result){
             res.status(200).json(
-                {mensaje: `La actividad con titulo ${titulo}, no se elimino exitosamente`});
+                {mensaje: `La actividad con titulo ${titulo}, se elimino exitosamente`});
         }else {
             res.status(404).json(
                 {mensaje: `La actividad con titulo ${titulo}, no se pudo encontrar.` }

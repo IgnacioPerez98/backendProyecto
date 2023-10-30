@@ -85,7 +85,7 @@ router.post("/crearsala", (req,res)=>{
  * paths:
  *   /api/sala/cambiarestadosala:
  *     post:
- *       summary: Crea la sala y devuelve un objeto de una sala (nombre, link, actividades, isOpen)
+ *       summary: Cambia el estado de una sala a travez del nombre
  *       security:
  *         - BearerAuth: []
  *       requestBody:
@@ -154,8 +154,8 @@ router.post("/cambiarestadosala", (req, res)=>{
  *
  * paths:
  *   /api/sala/eliminarsala:
- *     post:
- *       summary: Crea la sala y devuelve un objeto de una sala (nombre, link, actividades, isOpen)
+ *     delete:
+ *       summary: Elimina una sala con el nombre
  *       security:
  *         - BearerAuth: []
  *       requestBody:
