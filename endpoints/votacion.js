@@ -6,38 +6,42 @@ const votacionservice = require("../handlers/votacionhandler");
 
 
 /**
+ * OpenAPI Specification for Proyecto BackEnd API
+ *
+ * This OpenAPI specification documents the Proyecto BackEnd API, which allows users to vote on a specific activity in a given room.
+ *
  * @openapi
  * info:
  *   title: Proyecto BackEnd
  *   version: 1.0.0
- *   description: Proyecto BackEnd
+ *   description: Proyecto BackEnd API for voting on activities in rooms.
  *
  * paths:
  *   /api/votacion/votar:
  *     post:
- *       summary: Votar sala.
+ *       summary: Vote in a room.
  *       security:
- *         - BearerAuth: []
+ *         - BearerAuth: [] # Requires a Bearer Token (JWT) for authentication.
  *       requestBody:
- *          required: true
- *       content:
- *          application/json:
- *              schema:
- *                  type: object
- *                  properties:
- *                      nombresala:
- *                          type: string
- *                      nombreactividad:
- *                          type: string
- *                      voto:
- *                          type: string
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 nombresala:
+ *                   type: string
+ *                 nombreactividad:
+ *                   type: string
+ *                 voto:
+ *                   type: string
  *       responses:
  *         '200':
- *           description: Un message con el estado.
+ *           description: A message with the current status.
  *         '401':
- *           description: Usuario no autenticado.
+ *           description: Unauthorized. User is not authenticated.
  *         '500':
- *           description: Error en respuesta
+ *           description: Internal server error.
  *
  * components:
  *   securitySchemes:
@@ -46,6 +50,7 @@ const votacionservice = require("../handlers/votacionhandler");
  *       scheme: bearer
  *       bearerFormat: JWT
  */
+
 router.post("/votar",(req,res)=>{
     try {
         const head = req.headers['authorization'];
