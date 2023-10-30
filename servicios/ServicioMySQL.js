@@ -6,7 +6,7 @@ let servicioSQL ={
     ObtenerConexion : function(dbName){
         connection = mysql.createConnection({
         host     : 'mysql',
-        user     : 'root',
+        user     : 'sa',
         password : 'proyecto',
         database : dbName
         });
