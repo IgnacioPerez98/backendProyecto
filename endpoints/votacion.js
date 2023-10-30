@@ -65,6 +65,9 @@ router.post("/votar",(req,res)=>{
                 if(data === null){
                     return  res.status(401).json({message : "Usuario no autenticado"});
                 }
+                if(data.username === 'anonimo'){
+                    return res.status(403).json({message:"Usuario sin permisos"})
+                }
             }
         ).catch((e)=>{
             console.log(e);
@@ -128,6 +131,9 @@ router.get("/obtenervotos/:nombresala", (req,res) =>{
             (data) =>{
                 if(data === null){
                     return  res.status(401).json({message : "Usuario no autenticado"});
+                }
+                if(data.username === 'anonimo'){
+                    return res.status(403).json({message:"Usuario sin permisos"})
                 }
             }
         ).catch((e)=>{

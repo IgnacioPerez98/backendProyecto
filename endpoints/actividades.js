@@ -43,6 +43,9 @@ router.get('/getallactividades', (req, res) => {
                 if(data === null){
                     return  res.status(401).json({message : "Usuario no autenticado"});
                 }
+                if(data.username === 'anonimo'){
+                    return res.status(403).json({message:"Usuario sin permisos"})
+                }
             }
         ).catch((e)=>{
             console.log(e);
@@ -88,6 +91,10 @@ router.get('/getallactividades', (req, res) => {
  *     responses:
  *       200:
  *         description: Activity saved successfully
+ *       401:
+ *         description: Usuario no autentificado
+ *       403:
+ *         description: Usuario sin permisos.
  *       500:
  *         description: Error saving the activity
  *
@@ -109,6 +116,9 @@ router.post('/crearactividad', (req, res) => {
             (data) =>{
                 if(data === null){
                     return  res.status(401).json({message : "Usuario no autenticado"});
+                }
+                if(data.username === 'anonimo'){
+                    return res.status(403).json({message:"Usuario sin permisos"})
                 }
             }
         ).catch((e)=>{
@@ -152,6 +162,10 @@ router.post('/crearactividad', (req, res) => {
  *     responses:
  *       200:
  *         description: Actividad eliminada correctamente
+ *       401:
+ *         description: Usuario no autentificado
+ *       403:
+ *         description: Usuario sin permisos.
  *       404:
  *         description: Actividad no encontrada
  *
@@ -164,6 +178,23 @@ router.post('/crearactividad', (req, res) => {
  */
 router.delete('/elimininaractividad', (req, res) => {
     try {
+        const head = req.headers['authorization'];
+        if(!head){
+            return  res.status(401).json({message : "Usuario no autenticado"});
+        }
+        let token = head.split(" ").at(1);
+        authHandler.validacionInternadeUsuario(token).then(
+            (data) =>{
+                if(data === null){
+                    return  res.status(401).json({message : "Usuario no autenticado"});
+                }
+                if(data.username === 'anonimo'){
+                    return res.status(403).json({message:"Usuario sin permisos"})
+                }
+            }
+        ).catch((e)=>{
+            console.log(e);
+        })
         const { titulo }  = req.body;
         let result = acthandler.deleteActividad(titulo);
         if(result){

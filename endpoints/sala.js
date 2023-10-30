@@ -36,6 +36,8 @@ const authHandler = require("../handlers/authhandler");
  *           description: Una sala.
  *         '401':
  *           description: Usuario no autenticado.
+ *         '403':
+ *           description: Usuario sin permisos.
  *         '500':
  *           description: Error en respuesta
  *
@@ -57,9 +59,13 @@ router.post("/crearsala", (req,res)=>{
         let token = head.split(" ").at(1);
         authHandler.validacionInternadeUsuario(token).then(
             (data) =>{
-                if(data === null){
-                    return  res.status(401).json({message : "Usuario no autenticado"});
+                if(data === null) {
+                    return res.status(401).json({message: "Usuario no autenticado"});
                 }
+                if(data.username === 'anonimo'){
+                    return res.status(403).json({message:"Usuario sin permisos"})
+                }
+
             }
         ).catch((e)=>{
             console.log(e);
@@ -104,6 +110,8 @@ router.post("/crearsala", (req,res)=>{
  *           description: Un message con el estado.
  *         '401':
  *           description: Usuario no autenticado.
+ *         '403':
+ *           description: Usuario sin permisos.
  *         '500':
  *           description: Error en respuesta
  *
@@ -127,6 +135,9 @@ router.post("/cambiarestadosala", (req, res)=>{
            (data) =>{
                if(data === null){
                    return  res.status(401).json({message : "Usuario no autenticado"});
+               }
+               if(data.username === 'anonimo'){
+                   return res.status(403).json({message:"Usuario sin permisos"})
                }
            }
        ).catch((e)=>{
@@ -172,6 +183,8 @@ router.post("/cambiarestadosala", (req, res)=>{
  *           description: Un message con el estado.
  *         '401':
  *           description: Usuario no autenticado.
+ *         '403':
+ *           description: Usuario sin permisos.
  *         '500':
  *           description: Error en respuesta
  *
@@ -195,6 +208,9 @@ router.delete("/eliminarsala",(req,res)=>{
             (data) =>{
                 if(data === null){
                     return  res.status(401).json({message : "Usuario no autenticado"});
+                }
+                if(data.username === 'anonimo'){
+                    return res.status(403).json({message:"Usuario sin permisos"})
                 }
             }
         ).catch((e)=>{
