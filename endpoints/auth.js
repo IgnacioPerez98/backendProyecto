@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const serviciohash = require('../servicios/SHA512')
 const jwt = require('jsonwebtoken');
-const ServicioAuth = require('../handlers/authhandler');
 const dotenv = require('dotenv');
+const ServicioAuth = require('../handlers/authhandler');
 
 // get config vars
 dotenv.config();
@@ -59,7 +59,7 @@ router.post('/gettoken', (req, res) => {
         })
     }catch (e){
 
-        res.status(500).json({ message: 'Error de servidor' });
+        res.status(500).json({ message: 'Error de servidor', detalles : e.toString() });
     }
 });
 
@@ -87,20 +87,17 @@ router.post('/gettoken', (req, res) => {
  *         description: Error del servidor
  */
 router.post('/validartoken', (req, res) => {
-
-    const {token} = req.body;
-
     try {
+        const {token} = req.body;
         ServicioAuth.validarUsuarioconToken(token).then(
             (data) => {
-                console.log(data);
                 res.status(200).json(data);
             }
         ).catch((err) =>{
            res.status(403).json(err);
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error del servidor' });
+        res.status(500).json({ message: 'Error del servidor', detalles : e.toString() });
     }
 });
 
