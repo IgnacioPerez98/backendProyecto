@@ -90,20 +90,17 @@ router.post("/votar",(req,res)=>{
  *   description: Proyecto BackEnd
  *
  * paths:
- *   /api/votacion/obtenervotos:
+ *   /api/votacion/obtenervotos/{nombresala}:
  *     get:
  *       summary: Obtiene los votos de una sala determinada
  *       security:
  *         - BearerAuth: []
- *       requestBody:
- *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 nombresala:
- *                   type: string
+ *       parameters:
+ *         - in: path
+ *           name: nombresala
+ *           required: true
+ *           schema:
+ *             type: string
  *       responses:
  *         '200':
  *           description: Una lista de votos.
@@ -119,10 +116,10 @@ router.post("/votar",(req,res)=>{
  *       scheme: bearer
  *       bearerFormat: JWT
  */
-router.get("/obtenervotos", (req,res) =>{
+router.get("/obtenervotos/:nombresala", (req,res) =>{
     try{
         const head = req.headers['authorization'];
-        const {nombresala} = req.body;
+        const nombresala = req.params.nombresala;
         if(!head){
             return  res.status(401).json({message : "Usuario no autenticado"});
         }

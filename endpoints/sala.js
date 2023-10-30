@@ -182,7 +182,7 @@ router.post("/cambiarestadosala", (req, res)=>{
  *       scheme: bearer
  *       bearerFormat: JWT
  */
-router.post("/eliminarsala",(req,res)=>{
+router.delete("/eliminarsala",(req,res)=>{
     try {
         /*Controlo el token de validacion */
         const head = req.headers['authorization'];
