@@ -23,8 +23,6 @@ const authHandler = require("../handlers/authhandler");
  *       responses:
  *         '200':
  *           description: Una sala.
- *         '401':
- *           description: Usuario no autenticado.
  *         '500':
  *           description: Error en respuesta
  */
@@ -33,14 +31,11 @@ router.get("/obtenersala/:nombresala", (req,res)=>{
         const nameSala = req.params.nombresala;
         servicioSala.conectarasala(nameSala).then(
             (data)=>{
-                console.log("Data: ",data);
+                res.status(200).json(data);
             }
         ).catch((error)=>{
-            console.log(error);
+            res.status(500).json({message:"Error al intentar conectar a la sala. Verifique que esta existe"});
         })
-        res.status(600).json({message:"En desarrollo"});
-
-
     }catch (error){
         res.status(500).json({message:"Error del servidor"});
     }
