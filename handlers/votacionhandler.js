@@ -16,11 +16,10 @@ let votacionhandler ={
         )
     },
     obtenerVotosporSala:function(nombreSala){
-        new Promise ((resolve, reject)=>{
-            try{
-                let con = conexion.ObtenerConexion("proyectoback");
-                con.connect();
-                let consulta = `SELECT JSON_ARRAYAGG(JSON_OBJECT(
+        try{
+            let con = conexion.ObtenerConexion("proyectoback");
+            con.connect();
+            let consulta = `SELECT JSON_ARRAYAGG(JSON_OBJECT(
                     'nombreactividad', actividad,
                     'votos1', SUM(CASE WHEN voto = 1 THEN 1 ELSE 0 END),
                     'votosmenos1', SUM(CASE WHEN voto = -1 THEN 1 ELSE 0 END),
@@ -30,22 +29,22 @@ let votacionhandler ={
                 FROM votacion
                 WHERE nombresala = '${nombreSala}'
                 GROUP BY actividad; `;
-                con.query(consulta, (bad, ok)=>{
-                     if(bad){
+            con.query(consulta, (bad, ok)=>{
+                if(bad){
+                    return null;
+                } else{
+                    try{
+                        const ok = JSON.parse(ok[0].response);
+                        return ok;
+                    }catch(error){
+                        return null;
+                    }
+                }
+            });
 
-                     } else{
-                        try{
-                            resolve(JSON.parse(results[0].response));
-                        }catch(error){
-                            reject(error);
-                        }
-                     } 
-                });
-
-            }catch(error){
-                reject(error);
-            }
-        });
+        }catch(error){
+            return null;
+        }
     }
 }
 module.exports = votacionhandler;

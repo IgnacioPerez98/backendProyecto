@@ -60,19 +60,10 @@ router.post("/votar",(req,res)=>{
             return  res.status(401).json({message : "Usuario no autenticado"});
         }
         let token = head.split(" ").at(1);
-        authHandler.validacionInternadeUsuario(token).then(
-            (data) =>{
-                if(data === null){
-                    return  res.status(401).json({message : "Usuario no autenticado"});
-                }
-                if(data.username === 'anonimo'){
-                    return res.status(403).json({message:"Usuario sin permisos"})
-                }
-            }
-        ).catch((e)=>{
-            console.log(e);
-        })
-
+        let valor = authHandler.validarUsuarioconToken(token);
+        if(valor.username === "anonimo"){
+            res.status(403).json({message: "El usuario no cuenta con permisos suficientes"})
+        }
         votacionservice.votarActividad(nombresala,nombreactividad,voto).then((data)=>{
             res.status(200).json(JSON.stringify(data));
 
@@ -127,24 +118,17 @@ router.get("/obtenervotos/:nombresala", (req,res) =>{
             return  res.status(401).json({message : "Usuario no autenticado"});
         }
         let token = head.split(" ").at(1);
-        authHandler.validacionInternadeUsuario(token).then(
-            (data) =>{
-                if(data === null){
-                    return  res.status(401).json({message : "Usuario no autenticado"});
-                }
-                if(data.username === 'anonimo'){
-                    return res.status(403).json({message:"Usuario sin permisos"})
-                }
-            }
-        ).catch((e)=>{
-            console.log(e);
-        })
-        votacionhandler.obtenerVotosporSala(nombresala).then((data)=>{
-                res.status(200).json(data);
-        }).catch((e)=>{
-            res.status(500).json({mensaje: `Error del servidor`,detalles : e.toString()});
-        });
-
+        let valor = authHandler.validarUsuarioconToken(token);
+        if(valor.username === "anonimo"){
+            res.status(403).json({message: "El usuario no cuenta con permisos suficientes"})
+        }
+        let votos =  votacionhandler.obtenerVotosporSala(nombresala);
+        if(votos === null){
+            res.status(500).json({mensaje: `Error del servidor`});
+        }
+        else{
+            res.status(200).json(votos);
+        }
     }catch(e){
         res.status(500).json({mensaje: `Error del servidor`,detalles : e.toString()});
     }

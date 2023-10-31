@@ -8,8 +8,6 @@ const ServicioAuth = require('../handlers/authhandler');
 // get config vars
 dotenv.config();
 
-// access config var
-process.env.TOKEN_SECRET;
 
 /**
  * @swagger
@@ -54,11 +52,9 @@ router.post('/gettoken', (req, res) => {
 
             }
         ).catch( (error)=>{
-            console.log("Error: ",error);
             res.status(403).json({ message: 'Authentication failed' });
         })
     }catch (e){
-
         res.status(500).json({ message: 'Error de servidor', detalles : e.toString() });
     }
 });

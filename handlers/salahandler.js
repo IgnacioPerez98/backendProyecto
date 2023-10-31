@@ -41,11 +41,11 @@ let salaHandler ={
            }
         });
     },
-    eliminarSala : function (hashSala){
+    eliminarSala : function (nombresala){
         return new Promise((resolve,reject)=>{
             try {
                 let con = conexion.ObtenerConexion("proyectoback");
-                let consulta = `DELETE FROM juego WHERE juego.nombre = '${hashSala}'`;
+                let consulta = `DELETE FROM juego WHERE juego.nombre = '${nombresala}'`;
                 con.connect();
                 con.query(consulta);
                 resolve({estado: `Eliminación correcta`});
@@ -53,6 +53,27 @@ let salaHandler ={
                 reject(e);
             }
         })
+    },
+    conectarasala: function (nombresala){
+        return new Promise((resolve, reject)=>{
+            try {
+                let con = conexion.ObtenerConexion("proyectoback");
+                con.connect();
+                let consulta = `SELECT json_object('nombre', nombre, 'actividades', actividades, 'isOpen', isOpen) as response from juego where nombre = '${nombresala}'`;
+                con.query(consulta, (bad,ok)=>{
+                    try{
+                        resolve(JSON.parse(ok[0].response));
+                    }catch (error){
+                        reject(error);
+                    }
+                })
+            }catch (error){
+                console.log(error);
+                reject(null);
+            }
+        })
+
+
     }
 }
 

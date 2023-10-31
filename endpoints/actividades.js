@@ -38,18 +38,12 @@ router.get('/getallactividades', (req, res) => {
             return  res.status(401).json({message : "Usuario no autenticado"});
         }
         let token = head.split(" ").at(1);
-        authHandler.validacionInternadeUsuario(token).then(
-            (data) =>{
-                if(data === null){
-                    return  res.status(401).json({message : "Usuario no autenticado"});
-                }
-                if(data.username === 'anonimo'){
-                    return res.status(403).json({message:"Usuario sin permisos"})
-                }
-            }
-        ).catch((e)=>{
-            console.log(e);
-        })
+
+        let valor = authHandler.validarUsuarioconToken(token);
+        if(valor.username === "anonimo"){
+            res.status(403).json({message: "El usuario no cuenta con permisos suficientes"})
+        }
+
         let instance = acthandler.getAllActivities();
         instance.then((data) => {
             res.status(200).json(data);
@@ -112,18 +106,10 @@ router.post('/crearactividad', (req, res) => {
             return  res.status(401).json({message : "Usuario no autenticado"});
         }
         let token = head.split(" ").at(1);
-        authHandler.validacionInternadeUsuario(token).then(
-            (data) =>{
-                if(data === null){
-                    return  res.status(401).json({message : "Usuario no autenticado"});
-                }
-                if(data.username === 'anonimo'){
-                    return res.status(403).json({message:"Usuario sin permisos"})
-                }
-            }
-        ).catch((e)=>{
-            console.log(e);
-        })
+        let valor = authHandler.validarUsuarioconToken(token);
+        if(valor.username === "anonimo"){
+            res.status(403).json({message: "El usuario no cuenta con permisos suficientes"})
+        }
         const { titulo, descripcion } = req.body;
 
         let resultado = acthandler.insertActividad(titulo,descripcion);
@@ -183,18 +169,10 @@ router.delete('/elimininaractividad', (req, res) => {
             return  res.status(401).json({message : "Usuario no autenticado"});
         }
         let token = head.split(" ").at(1);
-        authHandler.validacionInternadeUsuario(token).then(
-            (data) =>{
-                if(data === null){
-                    return  res.status(401).json({message : "Usuario no autenticado"});
-                }
-                if(data.username === 'anonimo'){
-                    return res.status(403).json({message:"Usuario sin permisos"})
-                }
-            }
-        ).catch((e)=>{
-            console.log(e);
-        })
+        let valor = authHandler.validarUsuarioconToken(token);
+        if(valor.username === "anonimo"){
+            res.status(403).json({message: "El usuario no cuenta con permisos suficientes"})
+        }
         const { titulo }  = req.body;
         let result = acthandler.deleteActividad(titulo);
         if(result){

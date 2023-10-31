@@ -1,13 +1,50 @@
 const express = require('express');
 const router = express.Router();
-const serviciohash = require('../servicios/SHA512')
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-const ServicioAuth = require('../handlers/authhandler');
-
 const servicioSala = require('../handlers/salahandler');
 const authHandler = require("../handlers/authhandler");
 
+/**
+ * @openapi
+ * info:
+ *   title: Proyecto BackEnd
+ *   version: 1.0.0
+ *   description: Proyecto BackEnd
+ *
+ * paths:
+ *   /api/sala/obtenersala/{nombresala}:
+ *     get:
+ *       summary: Obtiene la conexion a una sala
+ *       parameters:
+ *         - in: path
+ *           name: nombresala
+ *           required: true
+ *           schema:
+ *             type: string
+ *       responses:
+ *         '200':
+ *           description: Una sala.
+ *         '401':
+ *           description: Usuario no autenticado.
+ *         '500':
+ *           description: Error en respuesta
+ */
+router.get("/obtenersala/:nombresala", (req,res)=>{
+    try {
+        const nameSala = req.params.nombresala;
+        servicioSala.conectarasala(nameSala).then(
+            (data)=>{
+                console.log("Data: ",data);
+            }
+        ).catch((error)=>{
+            console.log(error);
+        })
+        res.status(600).json({message:"En desarrollo"});
+
+
+    }catch (error){
+        res.status(500).json({message:"Error del servidor"});
+    }
+})
 
 /**
  * @openapi
@@ -57,19 +94,10 @@ router.post("/crearsala", (req,res)=>{
             return  res.status(401).json({message : "Usuario no autenticado"});
         }
         let token = head.split(" ").at(1);
-        authHandler.validacionInternadeUsuario(token).then(
-            (data) =>{
-                if(data === null) {
-                    return res.status(401).json({message: "Usuario no autenticado"});
-                }
-                if(data.username === 'anonimo'){
-                    return res.status(403).json({message:"Usuario sin permisos"})
-                }
-
-            }
-        ).catch((e)=>{
-            console.log(e);
-        })
+        let valor = authHandler.validarUsuarioconToken(token);
+        if(valor.username === "anonimo"){
+            res.status(403).json({message: "El usuario no cuenta con permisos suficientes"})
+        }
        servicioSala.crearSalaTodasLasActividades(nombresala).then(
            (data)=>{
                res.status(200).json(data);
@@ -131,18 +159,10 @@ router.post("/cambiarestadosala", (req, res)=>{
            return  res.status(401).json({message : "Usuario no autenticado"});
        }
        let token = head.split(" ").at(1);
-       authHandler.validacionInternadeUsuario(token).then(
-           (data) =>{
-               if(data === null){
-                   return  res.status(401).json({message : "Usuario no autenticado"});
-               }
-               if(data.username === 'anonimo'){
-                   return res.status(403).json({message:"Usuario sin permisos"})
-               }
-           }
-       ).catch((e)=>{
-           console.log(e);
-       })
+       let valor = authHandler.validarUsuarioconToken(token);
+       if(valor.username === "anonimo"){
+           res.status(403).json({message: "El usuario no cuenta con permisos suficientes"})
+       }
        servicioSala.estadoSala(estado,nombresala).then(
            (data) =>{
                res.status(200).json(data);
@@ -204,18 +224,10 @@ router.delete("/eliminarsala",(req,res)=>{
             return  res.status(401).json({message : "Usuario no autenticado"});
         }
         let token = head.split(" ").at(1);
-        authHandler.validacionInternadeUsuario(token).then(
-            (data) =>{
-                if(data === null){
-                    return  res.status(401).json({message : "Usuario no autenticado"});
-                }
-                if(data.username === 'anonimo'){
-                    return res.status(403).json({message:"Usuario sin permisos"})
-                }
-            }
-        ).catch((e)=>{
-            console.log(e);
-        })
+        let valor = authHandler.validarUsuarioconToken(token);
+        if(valor.username === "anonimo"){
+            res.status(403).json({message: "El usuario no cuenta con permisos suficientes"})
+        }
 
         servicioSala.eliminarSala(nombresala).then( (data)=>{
             res.status(200).json(data);

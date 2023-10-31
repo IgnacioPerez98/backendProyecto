@@ -5,30 +5,12 @@ const jwt = require('jsonwebtoken');
 
 let authhandler = {
     validarUsuarioconToken: function(token){
-        return new Promise((resolve,reject)=>{
-            jwt.verify(token, process.env.TOKEN_SECRET.toString(), (err, user) => {
-                if (err) {
-                    return  reject(err);
-                } else {
-                    return resolve(user);
-                }
-            });
-        });
-    },
-    validacionInternadeUsuario:function(token){
-        return  new Promise((rejected,resolve)=>{
-            let response = "";
-            this.validarUsuarioconToken(token).then( (data)=>{
-                    if(data === null || data === undefined || data === ""){
-                        rejected(null);
-                    }else {
-                        resolve(data.username);
-                    }
-
-                }
-            )
-            }
-        )
+        try {
+            const user = jwt.verify(token, process.env.TOKEN_SECRET.toString());
+            return user;
+        } catch (err) {
+            return null; // Or you can throw an error or handle the error as needed
+        }
     },
     validarUsuario : function(usuario){
         return new Promise( (resolve, reject) =>{
@@ -49,40 +31,6 @@ let authhandler = {
             })
         });
 
-    },
-    ingresarUsuario : function(usuario, contrasena, tokenadmin){
-        try{
-            let criptedpass = hashing.cifrar(contrasena);
-            let pass = {
-                password : criptedpass
-            }
-            let consulta = `INSERT INTO usuarios(usuario, contrasena) VALUES ( '${usuario}', '${JSON.stringify(pass)}')
-                            ON DUPLICATE KEY UPDATE contrasena = '${JSON.stringify(pass)}'`;
-            let con = conexion.ObtenerConexion();
-            con.connect();
-            con.query(consulta);
-            return true;
-        }catch(error){
-            console.log(error);
-            return false;
-        }
-    },
-    modficarUsuario : function(usuario, contrasena, tokenadmin){
-        try{
-            let criptedpass = hashing.cifrar(contrasena);
-            let pass = {
-                password : criptedpass
-            }
-            let consulta = `INSERT INTO usuarios(usuario, contrasena) VALUES ( '${usuario}', '${JSON.stringify(pass)}')
-                            ON DUPLICATE KEY UPDATE contrasena = '${JSON.stringify(pass)}'`;
-            let con = conexion.ObtenerConexion();
-            con.connect();
-            con.query(consulta);
-            return true;
-        }catch(error){
-            console.log(error);
-            return false;
-        }
     }
 }
 module.exports = authhandler;
