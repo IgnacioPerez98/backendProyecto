@@ -14,6 +14,8 @@ const authHandler = require("../handlers/authhandler");
  *   /api/sala/obtenersala/{nombresala}:
  *     get:
  *       summary: Obtiene la conexion a una sala
+ *       security:
+ *         - BearerAuth: []
  *       parameters:
  *         - in: path
  *           name: nombresala
@@ -25,9 +27,25 @@ const authHandler = require("../handlers/authhandler");
  *           description: Una sala.
  *         '500':
  *           description: Error en respuesta
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 router.get("/obtenersala/:nombresala", (req,res)=>{
     try {
+        /*Controlo el token de validacion */
+        const head = req.headers['authorization'];
+        if(!head){
+            return  res.status(401).json({message : "Usuario no autenticado"});
+        }
+        let token = head.split(" ").at(1);
+        let valor = authHandler.validarUsuarioconToken(token);
+        if(valor.username === null){
+            res.status(403).json({message: "El usuario no proporciono un token."})
+        }
         const nameSala = req.params.nombresala;
         servicioSala.conectarasala(nameSala).then(
             (data)=>{
@@ -104,6 +122,7 @@ router.post("/crearsala", (req,res)=>{
         return res.status(500).json({mensaje : "Error del servidor.", detalles : e.toString()});
     }
 })
+
 /**
  * @openapi
  * info:
