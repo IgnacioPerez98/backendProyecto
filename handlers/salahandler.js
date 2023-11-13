@@ -4,7 +4,7 @@ const ActividadesHandler = require('../handlers/actividadeshandler');
 
 
 let salaHandler ={
-    crearSalaTodasLasActividades : function (nombreSala){
+    crearSalaConActividades : function (nombreSala,actividades){
         return new Promise((resolve, reject)=>{
             try {
                 let con = conexion.ObtenerConexion("proyectoback");
@@ -12,7 +12,7 @@ let salaHandler ={
                     let sala ={
                         nombre: nombreSala,
                         link :hashing.cifrar(nombreSala),
-                        actividades: data,
+                        actividades: actividades,
                         isOpen : false
                     }
                     let consulta = `INSERT INTO juego(nombre, actividades,isOpen) VALUES ('${sala.nombre}', '${JSON.stringify(sala.actividades)}', ${sala.isOpen} )`;
