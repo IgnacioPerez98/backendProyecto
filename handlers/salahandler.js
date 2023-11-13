@@ -27,6 +27,27 @@ let salaHandler ={
             }
         })
     },
+    asociarActividadesSeleccionadasConJuego: function (nombreJuego, actividadesSeleccionadas) {
+        return new Promise((resolve, reject) => {
+            try {
+                let con = conexion.ObtenerConexion("proyectoback");
+                con.connect();
+
+                actividadesSeleccionadas.forEach((actividadId) => {
+                    let consulta = `INSERT INTO juegoactividad(nombre_juego, id_actividad, votos) VALUES ('${nombreJuego}', ${actividadId}, 0)`;
+                    con.query(consulta, (error) => {
+                        if (error) {
+                            reject(error);
+                        }
+                    });
+                });
+
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        });
+    },
     estadoSala: function (estado,nombreSala){
         return new Promise((resolve,reject)=>{
            try {

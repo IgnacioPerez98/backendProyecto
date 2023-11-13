@@ -9,7 +9,7 @@ services:
     image: mysql:latest
     restart: always
     ports:
-      - "3606:3606"
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: proyecto
       MYSQL_DATABASE: proyectoback
