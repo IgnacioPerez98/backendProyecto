@@ -81,6 +81,18 @@ router.get("/obtenersala/:nombresala", (req,res)=>{
  *                      properties:
  *                          nombresala:
  *                              type: string
+ *                          actividades:
+ *                              type: array
+ *                              items:
+ *                                  type: object
+ *                                  properties:
+ *                                      image:
+ *                                          type: string
+ *                                      descripcion:
+ *                                          type: string
+ *                                      titulo:
+ *                                          type: string
+ *
  *       responses:
  *         '200':
  *           description: Una sala.
@@ -100,7 +112,8 @@ router.get("/obtenersala/:nombresala", (req,res)=>{
  */
 router.post("/crearsala", (req,res)=>{
     try {
-        const {nombresala}= req.body;
+        const {nombresala,actividades}= req.body;
+        console.log(actividades);
         /*Controlo el token de validacion */
         const head = req.headers['authorization'];
         if(!head){
@@ -111,7 +124,7 @@ router.post("/crearsala", (req,res)=>{
         if(valor.username === "anonimo"){
             res.status(403).json({message: "El usuario no cuenta con permisos suficientes"})
         }
-       servicioSala.crearSalaTodasLasActividades(nombresala).then(
+       servicioSala.crearSalaConActividades(nombresala,actividades).then(
            (data)=>{
                res.status(200).json(data);
            }

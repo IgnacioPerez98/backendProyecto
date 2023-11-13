@@ -24,10 +24,13 @@ dotenv.config();
  *             properties:
  *               username:
  *                 type: string
+ *                 example : root
  *               password:
  *                 type: string
+ *                 example: password
  *               typerole:
  *                  enum: [usuario, administrador]
+ *                  example: administrador
  *     responses:
  *       200:
  *         description: Token generado
@@ -44,7 +47,7 @@ router.post('/gettoken', (req, res) => {
                 const { usuario, contrasena, rol} = data;
                 const pass = contrasena.contrasena;
                 if(username === usuario && serviciohash.cifrar(password) === pass && typerole === rol ){
-                    const token = jwt.sign({ username }, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+                    const token = jwt.sign({ username}, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
                     res.json({ token });
                 }else {
                     res.status(403).json({ message: 'Authentication failed, revise usuario, contraseña y tipo de rol.' });
