@@ -35,6 +35,15 @@ CREATE TABLE IF NOT EXISTS usuarios (
     rol varchar(45) not null
 );
 
+SELECT TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_SCHEMA = 'proyectoback' AND TABLE_NAME = 'propuestas';
+
+CREATE TABLE IF NOT EXISTS propuestas (
+    id int auto_increment not null primary key,
+    nombre varchar(255)
+);
+ 
 
 SELECT TABLE_NAME
 FROM INFORMATION_SCHEMA.TABLES
@@ -65,7 +74,6 @@ CREATE TABLE IF NOT EXISTS juegoactividad (
     id_actividad int not null,
     votos_positivos int not null,
     votos_negativos int not null,
-    votos_neutrales int not null,
     primary key (nombre_juego, id_actividad),
     foreign key (nombre_juego) references juego(nombre),
     foreign key (id_actividad) references actividades(id)

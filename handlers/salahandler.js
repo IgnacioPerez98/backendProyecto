@@ -27,6 +27,62 @@ let salaHandler ={
             }
         })
     },
+    asociarActividadesSeleccionadasConJuego: function (nombreJuego, actividadesSeleccionadas) {
+        return new Promise((resolve, reject) => {
+            try {
+                let con = conexion.ObtenerConexion("proyectoback");
+                con.connect();
+
+                actividadesSeleccionadas.forEach((actividadId) => {
+                    let consulta = `INSERT INTO juegoactividad(nombre_juego, id_actividad, votos) VALUES ('${nombreJuego}', ${actividadId}, 0)`;
+                    con.query(consulta, (error) => {
+                        if (error) {
+                            reject(error);
+                        }
+                    });
+                });
+
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        });
+    },
+    crearSalaConActividadesSeleccionadas: function (nombreSala, actividadesSeleccionadas) {
+        return new Promise((resolve, reject) => {
+            try {
+                let con = conexion.ObtenerConexion("proyectoback");
+    
+                let consulta = `INSERT INTO juego(nombre, isOpen) VALUES ('${nombreSala}', false)`;
+    
+                con.connect();
+    
+                con.query(consulta, (error, results) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        // Obtener el ID de la sala recién creada
+                        const salaId = results.insertId;
+    
+                        // Asociar las actividades seleccionadas con la sala
+                        actividadesSeleccionadas.forEach((actividadId) => {
+                            let consultaAsociacion = `INSERT INTO juegoactividad(nombre_juego, id_actividad, votos_positivos, votos_negativos, votos_neutrales) VALUES ('${nombreSala}', ${actividadId}, 0, 0, 0)`;
+                            con.query(consultaAsociacion, (asociacionError) => {
+                                if (asociacionError) {
+                                    reject(asociacionError);
+                                }
+                            });
+                        });
+    
+                        resolve({ nombre: nombreSala, link: hashing.cifrar(nombreSala), isOpen: false, actividades: actividadesSeleccionadas });
+                    }
+                });
+            } catch (e) {
+                reject(e);
+            }
+        });
+    },
+    
     estadoSala: function (estado,nombreSala){
         return new Promise((resolve,reject)=>{
            try {
@@ -74,6 +130,27 @@ let salaHandler ={
         })
 
 
+    },
+    obtenerVotosPorSala: function (nombreSala) {
+        return new Promise((resolve, reject) => {
+            try {
+                let con = conexion.ObtenerConexion("proyectoback");
+
+                let consulta = `SELECT id_actividad, votos_positivos, votos_negativos, votos_neutrales FROM juegoactividad WHERE nombre_juego = '${nombreSala}'`;
+
+                con.connect();
+
+                con.query(consulta, (error, results) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(results);
+                    }
+                });
+            } catch (e) {
+                reject(e);
+            }
+        });
     }
 }
 

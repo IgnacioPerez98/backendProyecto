@@ -69,7 +69,7 @@ router.get("/obtenersala/:nombresala", (req,res)=>{
  * paths:
  *   /api/sala/crearsala:
  *     post:
- *       summary: Crea la sala y devuelve un objeto de una sala (nombre, link, actividades, isOpen)
+ *       summary: Crea la sala y devuelve un objeto de una sala (nombre, link, isOpen)
  *       security:
  *         - BearerAuth: []
  *       requestBody:
@@ -81,18 +81,11 @@ router.get("/obtenersala/:nombresala", (req,res)=>{
  *                      properties:
  *                          nombresala:
  *                              type: string
- *                          actividades:
+
+ *                          actividadesSeleccionadas:
  *                              type: array
  *                              items:
- *                                  type: object
- *                                  properties:
- *                                      image:
- *                                          type: string
- *                                      descripcion:
- *                                          type: string
- *                                      titulo:
- *                                          type: string
- *
+ *                                  type: integer
  *       responses:
  *         '200':
  *           description: Una sala.
@@ -110,31 +103,33 @@ router.get("/obtenersala/:nombresala", (req,res)=>{
  *       scheme: bearer
  *       bearerFormat: JWT
  */
-router.post("/crearsala", (req,res)=>{
+router.post("/crearsala", async (req, res) => {
     try {
-        const {nombresala,actividades}= req.body;
-        console.log(actividades);
-        /*Controlo el token de validacion */
+
+        const { nombresala, actividadesSeleccionadas } = req.body;
+
+        // Controlo el token de validación
+
         const head = req.headers['authorization'];
-        if(!head){
-            return  res.status(401).json({message : "Usuario no autenticado"});
+        if (!head) {
+            return res.status(401).json({ message: "Usuario no autenticado" });
         }
-        let token = head.split(" ").at(1);
-        let valor = authHandler.validarUsuarioconToken(token);
-        if(valor.username === "anonimo"){
-            res.status(403).json({message: "El usuario no cuenta con permisos suficientes"})
+
+        const token = head.split(" ").at(1);
+        const valor = authHandler.validarUsuarioconToken(token);
+        if (valor.username === "anonimo") {
+            return res.status(403).json({ message: "El usuario no cuenta con permisos suficientes" });
         }
-       servicioSala.crearSalaConActividades(nombresala,actividades).then(
-           (data)=>{
-               res.status(200).json(data);
-           }
-       ).catch((error)=>{
-           return res.status(500).json({mensaje : "Error del servidor.",detalles:error.toString()});
-       });
-    }catch (e){
-        return res.status(500).json({mensaje : "Error del servidor.", detalles : e.toString()});
+
+
+        const data = await servicioSala.crearSalaConActividadesSeleccionadas(nombresala, actividadesSeleccionadas);
+        res.status(200).json(data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensaje: "Error del servidor", detalles: error.toString() });
+
     }
-})
+});
 
 /**
  * @openapi
@@ -265,7 +260,66 @@ router.delete("/eliminarsala",(req,res)=>{
     }catch (e){
         res.status(500).json({message:"Error del servidor", detalles : e.toString()});
     }
-})
+});
+/**
+ * @openapi
+ * info:
+ *   title: Proyecto BackEnd
+ *   version: 1.0.0
+ *   description: Proyecto BackEnd
+ *
+ * paths:
+ *   /api/sala/obtenervotos/{nombresala}:
+ *     get:
+ *       summary: Obtiene los votos de las actividades dado el nombre de una sala.
+ *       security:
+ *         - BearerAuth: []
+ *       parameters:
+ *         - in: path
+ *           name: nombresala
+ *           required: true
+ *           schema:
+ *             type: string
+ *       responses:
+ *         '200':
+ *           description: Votos de las actividades.
+ *         '401':
+ *           description: Usuario no autenticado.
+ *         '403':
+ *           description: Usuario sin permisos.
+ *         '500':
+ *           description: Error en respuesta
+ *
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+router.get("/obtenervotos/:nombresala", async (req, res) => {
+    try {
+        const nombreSala = req.params.nombresala;
+
+        // Controlo el token de validación
+        const head = req.headers['authorization'];
+        if (!head) {
+            return res.status(401).json({ message: "Usuario no autenticado" });
+        }
+
+        const token = head.split(" ").at(1);
+        const valor = authHandler.validarUsuarioconToken(token);
+        if (valor.username !== "anonimo" && valor.username !== "admin") {
+            return res.status(401).json({ message: "No autorizado para ver los resultados" });
+        }
+
+        const votos = await salaHandler.obtenerVotosPorSala(nombreSala);
+        res.status(200).json(votos);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensaje: "Error del servidor", detalles: error.toString() });
+    }
+});
 
 
 module.exports = router;
