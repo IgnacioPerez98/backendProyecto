@@ -69,7 +69,7 @@ router.get("/obtenersala/:nombresala", (req,res)=>{
  * paths:
  *   /api/sala/crearsala:
  *     post:
- *       summary: Crea la sala y devuelve un objeto de una sala (nombre, link, actividades, isOpen)
+ *       summary: Crea la sala y devuelve un objeto de una sala (nombre, link, isOpen)
  *       security:
  *         - BearerAuth: []
  *       requestBody:
@@ -81,6 +81,10 @@ router.get("/obtenersala/:nombresala", (req,res)=>{
  *                      properties:
  *                          nombresala:
  *                              type: string
+ *                          actividadesSeleccionadas:
+ *                              type: array
+ *                              items:
+ *                                  type: integer
  *       responses:
  *         '200':
  *           description: Una sala.
@@ -98,30 +102,29 @@ router.get("/obtenersala/:nombresala", (req,res)=>{
  *       scheme: bearer
  *       bearerFormat: JWT
  */
-router.post("/crearsala", (req,res)=>{
+router.post("/crearsala", async (req, res) => {
     try {
-        const {nombresala}= req.body;
-        /*Controlo el token de validacion */
+        const { nombresala, actividadesSeleccionadas } = req.body;
+
+        // Controlo el token de validación
         const head = req.headers['authorization'];
-        if(!head){
-            return  res.status(401).json({message : "Usuario no autenticado"});
+        if (!head) {
+            return res.status(401).json({ message: "Usuario no autenticado" });
         }
-        let token = head.split(" ").at(1);
-        let valor = authHandler.validarUsuarioconToken(token);
-        if(valor.username === "anonimo"){
-            res.status(403).json({message: "El usuario no cuenta con permisos suficientes"})
+
+        const token = head.split(" ").at(1);
+        const valor = authHandler.validarUsuarioconToken(token);
+        if (valor.username === "anonimo") {
+            return res.status(403).json({ message: "El usuario no cuenta con permisos suficientes" });
         }
-       servicioSala.crearSalaTodasLasActividades(nombresala).then(
-           (data)=>{
-               res.status(200).json(data);
-           }
-       ).catch((error)=>{
-           return res.status(500).json({mensaje : "Error del servidor.",detalles:error.toString()});
-       });
-    }catch (e){
-        return res.status(500).json({mensaje : "Error del servidor.", detalles : e.toString()});
+
+        const data = await servicioSala.crearSalaConActividadesSeleccionadas(nombresala, actividadesSeleccionadas);
+        res.status(200).json(data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensaje: "Error del servidor", detalles: error.toString() });
     }
-})
+});
 
 /**
  * @openapi
