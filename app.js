@@ -20,6 +20,7 @@ let allowedOrigins = [
     'http://www.desarrollowebback.duckdns.org'
 
 ];
+/*
 app.use(cors({
   origin: function(origin, callback){
     // allow requests with no origin
@@ -32,7 +33,9 @@ app.use(cors({
     }
     return callback(null, true);
   }
-}));
+}));*/
+
+
 
 // Middleware para servir la documentación Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

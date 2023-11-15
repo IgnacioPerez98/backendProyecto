@@ -81,6 +81,7 @@ router.get("/obtenersala/:nombresala", (req,res)=>{
  *                      properties:
  *                          nombresala:
  *                              type: string
+
  *                          actividadesSeleccionadas:
  *                              type: array
  *                              items:
@@ -104,9 +105,11 @@ router.get("/obtenersala/:nombresala", (req,res)=>{
  */
 router.post("/crearsala", async (req, res) => {
     try {
+
         const { nombresala, actividadesSeleccionadas } = req.body;
 
         // Controlo el token de validación
+
         const head = req.headers['authorization'];
         if (!head) {
             return res.status(401).json({ message: "Usuario no autenticado" });
@@ -118,11 +121,13 @@ router.post("/crearsala", async (req, res) => {
             return res.status(403).json({ message: "El usuario no cuenta con permisos suficientes" });
         }
 
+
         const data = await servicioSala.crearSalaConActividadesSeleccionadas(nombresala, actividadesSeleccionadas);
         res.status(200).json(data);
     } catch (error) {
         console.error(error);
         res.status(500).json({ mensaje: "Error del servidor", detalles: error.toString() });
+
     }
 });
 
