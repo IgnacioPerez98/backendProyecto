@@ -255,7 +255,66 @@ router.delete("/eliminarsala",(req,res)=>{
     }catch (e){
         res.status(500).json({message:"Error del servidor", detalles : e.toString()});
     }
-})
+});
+/**
+ * @openapi
+ * info:
+ *   title: Proyecto BackEnd
+ *   version: 1.0.0
+ *   description: Proyecto BackEnd
+ *
+ * paths:
+ *   /api/sala/obtenervotos/{nombresala}:
+ *     get:
+ *       summary: Obtiene los votos de las actividades dado el nombre de una sala.
+ *       security:
+ *         - BearerAuth: []
+ *       parameters:
+ *         - in: path
+ *           name: nombresala
+ *           required: true
+ *           schema:
+ *             type: string
+ *       responses:
+ *         '200':
+ *           description: Votos de las actividades.
+ *         '401':
+ *           description: Usuario no autenticado.
+ *         '403':
+ *           description: Usuario sin permisos.
+ *         '500':
+ *           description: Error en respuesta
+ *
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+router.get("/obtenervotos/:nombresala", async (req, res) => {
+    try {
+        const nombreSala = req.params.nombresala;
+
+        // Controlo el token de validación
+        const head = req.headers['authorization'];
+        if (!head) {
+            return res.status(401).json({ message: "Usuario no autenticado" });
+        }
+
+        const token = head.split(" ").at(1);
+        const valor = authHandler.validarUsuarioconToken(token);
+        if (valor.username !== "anonimo" && valor.username !== "admin") {
+            return res.status(401).json({ message: "No autorizado para ver los resultados" });
+        }
+
+        const votos = await salaHandler.obtenerVotosPorSala(nombreSala);
+        res.status(200).json(votos);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensaje: "Error del servidor", detalles: error.toString() });
+    }
+});
 
 
 module.exports = router;

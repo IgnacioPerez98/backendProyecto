@@ -130,6 +130,27 @@ let salaHandler ={
         })
 
 
+    },
+    obtenerVotosPorSala: function (nombreSala) {
+        return new Promise((resolve, reject) => {
+            try {
+                let con = conexion.ObtenerConexion("proyectoback");
+
+                let consulta = `SELECT id_actividad, votos_positivos, votos_negativos, votos_neutrales FROM juegoactividad WHERE nombre_juego = '${nombreSala}'`;
+
+                con.connect();
+
+                con.query(consulta, (error, results) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(results);
+                    }
+                });
+            } catch (e) {
+                reject(e);
+            }
+        });
     }
 }
 
