@@ -5,7 +5,7 @@ let actividadesHandler = {
 
     getAllActivities : function(){
         return new Promise((resolve, reject) => {
-            const consulta = `SELECT JSON_ARRAYAGG(JSON_OBJECT('titulo', titulo, 'descripcion', descripcion, 'image', image)) as response FROM actividades;`;
+            const consulta = `SELECT JSON_ARRAYAGG(JSON_OBJECT('id', id, 'titulo', titulo, 'descripcion', descripcion, 'image', image)) as response FROM actividades;`;
             let conexion1 = conexion.ObtenerConexion("proyectoback");
             conexion1.connect();
             conexion1.query(consulta, (error, results) => {
