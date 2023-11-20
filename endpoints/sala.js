@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const servicioSala = require('../handlers/salahandler');
 const authHandler = require("../handlers/authhandler");
+const ws = require('./salawebsocket')
 
 /**
  * @openapi
@@ -309,7 +310,7 @@ router.get("/obtenervotos/:nombresala", async (req, res) => {
 
         const token = head.split(" ").at(1);
         const valor = authHandler.validarUsuarioconToken(token);
-        if (valor.username !== "anonimo" && valor.username !== "admin") {
+        if (valor.username !== "anonimo" && valor.username !== "root") {
             return res.status(401).json({ message: "No autorizado para ver los resultados" });
         }
 
@@ -322,4 +323,67 @@ router.get("/obtenervotos/:nombresala", async (req, res) => {
 });
 
 
+/**
+ * @openapi
+ * info:
+ *   title: Proyecto BackEnd
+ *   version: 1.0.0
+ *   description: Proyecto BackEnd
+ *
+ * paths:
+ *   /api/sala/notify:
+ *     post:
+ *       summary: Obtiene los votos de las actividades dado el nombre de una sala.
+ *       security:
+ *         - BearerAuth: []
+ *       requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          texto:
+ *                              type: string
+ *       responses:
+ *         '200':
+ *           description: texto enviado.
+ *         '401':
+ *           description: Usuario no autenticado.
+ *         '403':
+ *           description: Usuario sin permisos.
+ *         '500':
+ *           description: Error en respuesta
+ *
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+router.post('/notify',(req,res)=>{
+    try {
+        // Controlo el token de validación
+        const head = req.headers['authorization'];
+        if (!head) {
+            return res.status(401).json({ message: "Usuario no autenticado" });
+        }
+
+        const token = head.split(" ").at(1);
+        const valor = authHandler.validarUsuarioconToken(token);
+        if (valor.username !== "root") {
+            return res.status(401).json({ message: "No autorizado para ver los resultados" });
+        }
+        const { texto } = req.body;
+        ws.Notify(texto);
+        return res.status(200).json({Message :'Enviado'});
+
+
+    }catch (error){
+        console.error(error);
+        res.status(500).json({ mensaje: "Error del servidor", detalles: error.toString() });
+
+    }
+})
 module.exports = router;

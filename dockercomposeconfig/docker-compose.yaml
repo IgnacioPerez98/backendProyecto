@@ -17,7 +17,8 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   proyectobackend:
     container_name: "APIExpressySwagger"
-    image: proyectobackend
+    build:
+      context: ../
     restart: always
     ports:
       - "3000:3000"

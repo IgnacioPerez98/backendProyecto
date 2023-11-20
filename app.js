@@ -3,39 +3,37 @@ const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
 const swaggerSpec = require('./routes/swagger'); // Importa la configuración de Swagger
 
+
+//WEbSocket
+
+const http = require('http');
+const WebSocket = require('ws');
+
 //Endpoints
 const actividadesRoute = require('./endpoints/actividades.js');
 const authRoute = require('./endpoints/auth.js');
 const salaRoute = require('./endpoints/sala');
 const votacionRoute = require('./endpoints/votacion');
+const webSocketEndpoint = require('./endpoints/salawebsocket')
 
 //Almaceno instancia de express
 const app = express();
 app.use(express.json());
-//Configuro el cors
-let allowedOrigins = [
-    'http://localhost:3000',
-    'http://localhost:4200',
-    'https://www.desarrollowebback.duckdns.org',
-    'http://www.desarrollowebback.duckdns.org'
 
-];
-/*
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+
+//Endpoint de WebSocket
+webSocketEndpoint.setWS(wss);
+webSocketEndpoint.wsCreateCon();
+
+app.use(express.static('public'));
+
 app.use(cors({
   origin: function(origin, callback){
-    // allow requests with no origin
-    // (like mobile apps or curl requests)
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){
-      var msg = 'The CORS policy for this site does not ' +
-          'allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
     return callback(null, true);
   }
-}));*/
-
-
+}));
 
 // Middleware para servir la documentación Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -51,4 +49,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor Express en ejecución en el puerto ${PORT}`);
 });
+server.listen(8080, ()=>{
+    console.log("Websocket on 8080")
+})
 
