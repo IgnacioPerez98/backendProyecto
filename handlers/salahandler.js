@@ -115,7 +115,7 @@ let salaHandler ={
             try {
                 let con = conexion.ObtenerConexion("proyectoback");
                 con.connect();
-                let consulta = `SELECT json_object('nombre', nombre, 'actividades', actividades, 'isOpen', isOpen) as response from juego where nombre = '${nombresala}'`;
+                let consulta = `SELECT json_object('nombre', nombre, 'isOpen', isOpen) as response from juego where nombre = '${nombresala}'`;
                 con.query(consulta, (bad,ok)=>{
                     try{
                         resolve(JSON.parse(ok[0].response));
