@@ -42,10 +42,12 @@ dotenv.config();
 router.post('/gettoken', (req, res) => {
     try{
         const { username, password, typerole } = req.body;
+        console.log(username);
         ServicioAuth.validarUsuario(username).then(
             (data) =>{
                 const { usuario, contrasena, rol} = data;
                 const pass = contrasena.contrasena;
+                console.log(pass);
                 if(username === usuario && serviciohash.cifrar(password) === pass && typerole === rol ){
                     const token = jwt.sign({ username}, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
                     res.json({ token });
@@ -55,6 +57,8 @@ router.post('/gettoken', (req, res) => {
 
             }
         ).catch( (error)=>{
+
+            console.log(error);
             res.status(403).json({ message: 'Authentication failed' });
         })
     }catch (e){
