@@ -117,14 +117,16 @@ let salaHandler ={
                 con.connect();
                 let consulta = `
                 SELECT 
-                    json_object('nombre', juego.nombre, 'isOpen', juego.isOpen, 'actividades', JSON_ARRAYAGG(json_object('id_actividad', juegoactividad.id_actividad, 'votos_positivos', juegoactividad.votos_positivos, 'votos_negativos', juegoactividad.votos_negativos, 'votos_neutrales', juegoactividad.votos_neutrales))) as response
-                FROM 
-                    juego
-                LEFT JOIN 
-                    juegoactividad ON juego.nombre = juegoactividad.nombre_juego
-                WHERE 
-                    juego.nombre = '${nombresala}';
-            `;
+                        json_object('nombre', juego.nombre, 'isOpen', juego.isOpen, 'actividades', JSON_ARRAYAGG(json_object('id_actividad', juegoactividad.id_actividad, 'titulo', actividades.titulo, 'descripcion', actividades.descripcion, 'image', actividades.image))) as response
+                    FROM 
+                        juego
+                    LEFT JOIN 
+                        juegoactividad ON juego.nombre = juegoactividad.nombre_juego
+                    LEFT JOIN 
+                        actividades ON juegoactividad.id_actividad = actividades.id
+                    WHERE 
+                        juego.nombre = '${nombresala}';
+                `;
                 con.query(consulta, (bad,ok)=>{
                     try{
                         resolve(JSON.parse(ok[0].response));
