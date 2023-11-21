@@ -142,6 +142,27 @@ let salaHandler ={
 
 
     },
+    votarActividad: function (nombreSala, idActividad, voto) {
+        return new Promise((resolve, reject) => {
+            try {
+                const con = conexion.ObtenerConexion("proyectoback");
+                con.connect();
+
+                // Actualizar la tabla juegoactividad con el voto correspondiente
+                const consulta = `UPDATE juegoactividad SET votos_positivos = votos_positivos + ${voto === 1 ? 1 : 0}, votos_negativos = votos_negativos + ${voto === -1 ? 1 : 0}, votos_neutrales = votos_neutrales + ${voto === 0 ? 1 : 0} WHERE nombre_juego = '${nombreSala}' AND id_actividad = ${idActividad}`;
+
+                con.query(consulta, (error) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve();
+                    }
+                });
+            } catch (error) {
+                reject(error);
+            }
+        });
+    },
     
     obtenerVotosPorSala: function (nombreSala) {
         return new Promise((resolve, reject) => {
