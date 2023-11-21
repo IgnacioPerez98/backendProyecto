@@ -321,6 +321,74 @@ router.get("/obtenervotos/:nombresala", async (req, res) => {
         res.status(500).json({ mensaje: "Error del servidor", detalles: error.toString() });
     }
 });
+/**
+ * @openapi
+ * info:
+ *   title: Proyecto BackEnd
+ *   version: 1.0.0
+ *   description: Proyecto BackEnd
+ *
+ * paths:
+ *   /api/sala/votaractividad:
+ *     post:
+ *       summary: Votar por una actividad en una sala.
+ *       security:
+ *         - BearerAuth: []
+ *       requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          nombresala:
+ *                              type: string
+ *                          id_actividad:
+ *                              type: integer
+ *                          voto:
+ *                              type: integer
+ *       responses:
+ *         '200':
+ *           description: Voto registrado exitosamente.
+ *         '401':
+ *           description: Usuario no autenticado.
+ *         '403':
+ *           description: Usuario sin permisos.
+ *         '500':
+ *           description: Error en respuesta.
+ *
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+router.post("/votaractividad", async (req, res) => {
+    try {
+        const { nombresala, id_actividad, voto } = req.body;
+
+        // Validar la existencia del token
+        const head = req.headers['authorization'];
+        if (!head) {
+            return res.status(401).json({ message: "Usuario no autenticado" });
+        }
+
+        // Validar el token
+        const token = head.split(" ")[1];
+        const valor = authHandler.validarUsuarioconToken(token);
+        if (valor.username === null) {
+            return res.status(403).json({ message: "El usuario no proporcionó un token válido." });
+        }
+
+        // Votar por la actividad
+        await servicioSala.votarActividad(nombresala, id_actividad, voto);
+
+        res.status(200).json({ message: "Voto registrado exitosamente." });
+    } catch (error) {
+        res.status(500).json({ message: "Error del servidor.", detalles: error.toString() });
+    }
+});
 
 
 /**

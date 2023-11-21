@@ -117,14 +117,16 @@ let salaHandler ={
                 con.connect();
                 let consulta = `
                 SELECT 
-                    json_object('nombre', juego.nombre, 'isOpen', juego.isOpen, 'actividades', JSON_ARRAYAGG(json_object('id_actividad', juegoactividad.id_actividad, 'votos_positivos', juegoactividad.votos_positivos, 'votos_negativos', juegoactividad.votos_negativos, 'votos_neutrales', juegoactividad.votos_neutrales))) as response
-                FROM 
-                    juego
-                LEFT JOIN 
-                    juegoactividad ON juego.nombre = juegoactividad.nombre_juego
-                WHERE 
-                    juego.nombre = '${nombresala}';
-            `;
+                        json_object('nombre', juego.nombre, 'isOpen', juego.isOpen, 'actividades', JSON_ARRAYAGG(json_object('id_actividad', juegoactividad.id_actividad, 'titulo', actividades.titulo, 'descripcion', actividades.descripcion, 'image', actividades.image))) as response
+                    FROM 
+                        juego
+                    LEFT JOIN 
+                        juegoactividad ON juego.nombre = juegoactividad.nombre_juego
+                    LEFT JOIN 
+                        actividades ON juegoactividad.id_actividad = actividades.id
+                    WHERE 
+                        juego.nombre = '${nombresala}';
+                `;
                 con.query(consulta, (bad,ok)=>{
                     try{
                         const {response} = ok[0];
@@ -140,6 +142,27 @@ let salaHandler ={
         })
 
 
+    },
+    votarActividad: function (nombreSala, idActividad, voto) {
+        return new Promise((resolve, reject) => {
+            try {
+                const con = conexion.ObtenerConexion("proyectoback");
+                con.connect();
+
+                // Actualizar la tabla juegoactividad con el voto correspondiente
+                const consulta = `UPDATE juegoactividad SET votos_positivos = votos_positivos + ${voto === 1 ? 1 : 0}, votos_negativos = votos_negativos + ${voto === -1 ? 1 : 0}, votos_neutrales = votos_neutrales + ${voto === 0 ? 1 : 0} WHERE nombre_juego = '${nombreSala}' AND id_actividad = ${idActividad}`;
+
+                con.query(consulta, (error) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve();
+                    }
+                });
+            } catch (error) {
+                reject(error);
+            }
+        });
     },
     
     obtenerVotosPorSala: function (nombreSala) {
