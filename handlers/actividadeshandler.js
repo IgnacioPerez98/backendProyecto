@@ -13,8 +13,8 @@ let actividadesHandler = {
                     reject(error);
                 } else {
                     try {
-                        const objectArray = JSON.parse(results[0].response);
-                        resolve(objectArray);
+                        const {response} = results[0];
+                        resolve(response);
                     } catch (error) {
                         reject(error);
                     }

@@ -127,7 +127,8 @@ let salaHandler ={
             `;
                 con.query(consulta, (bad,ok)=>{
                     try{
-                        resolve(JSON.parse(ok[0].response));
+                        const {response} = ok[0];
+                        resolve(response);
                     }catch (error){
                         reject(error);
                     }

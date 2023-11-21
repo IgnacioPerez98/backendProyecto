@@ -34,8 +34,8 @@ let votacionhandler ={
                     return null;
                 } else{
                     try{
-                        const ok = JSON.parse(ok[0].response);
-                        return ok;
+                        const {response} = ok[0];
+                        return response;
                     }catch(error){
                         return null;
                     }

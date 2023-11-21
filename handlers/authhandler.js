@@ -22,8 +22,8 @@ let authhandler = {
                     reject(bad);
                 }else{
                     try {
-                        const objectArray = JSON.parse(ok[0].userJSON);
-                        resolve(objectArray);
+                        let {userJSON} = ok[0];
+                        resolve(userJSON);
                     } catch (error) {
                         reject(error);
                     }

@@ -46,10 +46,10 @@ app.use('/api/votacion',votacionRoute);
 
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor Express en ejecución en el puerto ${PORT}`);
-});
-server.listen(8080, ()=>{
-    console.log("Websocket on 8080")
+// app.listen(PORT, () => {
+//   console.log(`Servidor Express en ejecución en el puerto ${PORT}`);
+// });
+server.listen(PORT, ()=>{
+    console.log("Express y WebSocket en el puerto 3000")
 })
 
