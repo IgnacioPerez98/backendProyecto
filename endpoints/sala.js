@@ -59,6 +59,47 @@ router.get("/obtenersala/:nombresala", (req,res)=>{
         res.status(500).json({message:"Error del servidor"});
     }
 })
+/**
+ * @openapi
+ * paths:
+ *   /api/sala/obtenersalas:
+ *     get:
+ *       summary: Obtiene todas las salas con actividades seleccionadas.
+ *       security:
+ *         - BearerAuth: []
+ *       responses:
+ *         '200':
+ *           description: Lista de salas con actividades.
+ *         '401':
+ *           description: Usuario no autenticado.
+ *         '403':
+ *           description: Usuario sin permisos.
+ *         '500':
+ *           description: Error en respuesta.
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+router.get("/obtenersalas", (req, res) => {
+    try {
+      const head = req.headers['authorization'];
+      if (!head) {
+       return res.status(401).json({ message: "Usuario no autenticado" });
+      }
+      // Obtén las salas con actividades desde tu servicio/handler
+      servicioSala.obtenerSalasConActividades().then((data) => {
+        res.status(200).json(data);
+      }).catch((error) => {
+        res.status(500).json({ message: "Error al obtener las salas.", details: error.toString() });
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Error del servidor.", details: error.toString() });
+    }
+})
+  
 
 /**
  * @openapi

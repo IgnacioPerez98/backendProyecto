@@ -164,6 +164,44 @@ let salaHandler ={
             }
         });
     },
+    obtenerSalasConActividades: function () {
+        return new Promise((resolve, reject) => {
+          try {
+            let con = conexion.ObtenerConexion("proyectoback");
+            con.connect();
+            let consulta = `SELECT juego.nombre, juego.isOpen, 
+                                   GROUP_CONCAT(JSON_OBJECT('id_actividad', ja.id_actividad, 
+                                                         'votos_positivos', ja.votos_positivos,
+                                                         'votos_negativos', ja.votos_negativos,
+                                                         'votos_neutrales', ja.votos_neutrales)) as actividades
+                            FROM juego
+                            LEFT JOIN juegoactividad ja ON juego.nombre = ja.nombre_juego
+                            GROUP BY juego.nombre`;
+            con.query(consulta, (error, result) => {
+              if (error) {
+                reject(error);
+              } else {
+                let salas = result.map((sala) => {
+                  return {
+                    nombre: sala.nombre,
+                    isOpen: sala.isOpen,
+                    actividades: sala.actividades ? JSON.parse(`[${sala.actividades}]`) : [],
+                  };
+                });
+    
+                if (salas.length === 0) {
+                  resolve({ mensaje: "No hay salas disponibles." });
+                } else {
+                  resolve(salas);
+                }
+              }
+            });
+          } catch (error) {
+            console.log(error);
+            reject(null);
+          }
+        });
+      },
     
     obtenerVotosPorSala: function (nombreSala) {
         return new Promise((resolve, reject) => {
