@@ -1,8 +1,8 @@
 /*Usuario*/
-CREATE USER 'sa'@'%' IDENTIFIED BY 'proyecto';
+CREATE USER 'sa'@'%' IDENTIFIED WITH mysql_native_password BY 'proyecto';
 GRANT USAGE ON *.* TO 'sa'@'%';
 GRANT ALL PRIVILEGES ON proyectoback.* TO 'sa'@'%';
-FLUSH PRIVILEGES;
+FLUSH PRIVILEGES;   
 
 /*Tablas*/
 SELECT SCHEMA_NAME
