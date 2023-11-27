@@ -202,6 +202,7 @@ let salaHandler ={
       }
     });
   },
+
     
     obtenerVotosPorSala: function (nombreSala) {
         return new Promise((resolve, reject) => {
