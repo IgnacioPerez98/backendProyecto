@@ -355,7 +355,7 @@ router.get("/obtenervotos/:nombresala", async (req, res) => {
             return res.status(401).json({ message: "No autorizado para ver los resultados" });
         }
 
-        const votos = await salaHandler.obtenerVotosPorSala(nombreSala);
+        const votos = await servicioSala.obtenerVotosPorSala(nombreSala);
         res.status(200).json(votos);
     } catch (error) {
         console.error(error);
